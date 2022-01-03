@@ -1,0 +1,10 @@
+.signin {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  max-width: 100%;
+  & > *:not(:last-child) {
+    margin-bottom: 20px;
+  }
+}
