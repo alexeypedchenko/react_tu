@@ -3,7 +3,7 @@ import type { RootState } from '../../store'
 import { IUserState } from './types'
 
 const initialState: IUserState = {
-  user: {},
+  user: null,
   isAuth: false,
 }
 
@@ -20,7 +20,9 @@ export const userSlice = createSlice({
   },
 })
 
-export const { setUser } = userSlice.actions
+export const userActions = {
+  ...userSlice.actions
+}
 
 export const selectUser = (state: RootState) => state.user
 

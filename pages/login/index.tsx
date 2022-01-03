@@ -1,23 +1,25 @@
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
+import Signin from '../../components/Signin/Signin'
 import { useAppSelector } from '../../hooks/useStore'
 
-const Profile: NextPage = () => {
+const Login: NextPage = () => {
   const { isAuth } = useAppSelector((state) => state.user)
   const router = useRouter()
 
   useEffect(() => {
-    if (!isAuth) {
-      router.push('/login')
+    if (isAuth) {
+      router.push('/profile')
     }
   }, [isAuth])
 
   return (
     <div>
-      Profile page
+      <h1>Login page</h1>
+      <Signin />
     </div>
   )
 }
 
-export default Profile
+export default Login

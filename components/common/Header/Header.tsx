@@ -1,13 +1,12 @@
 import { FC } from 'react'
 import Link from 'next/link'
 import styles from './Header.module.scss'
-
-const links = [
-  { name: 'Home', path: '/' },
-  { name: 'Profile', path: '/profile' },
-]
+import { links } from '../../../utils/links'
+import { signout } from '../../../firebase/firebaseAuth'
+import { useAppSelector } from '../../../hooks/useStore'
 
 const Header: FC = () => {
+  const { isAuth } = useAppSelector((state) => state.user)
   return (
     <header className={styles.header}>
       <div className={styles.link}>
@@ -29,7 +28,17 @@ const Header: FC = () => {
       </nav>
 
       <div className={styles.profile}>
-        login
+        {isAuth ? (
+          <button onClick={signout}>
+            logout
+          </button>
+        ) : (
+          <Link href="/login">
+            <a className={styles.link}>
+              login
+            </a>
+          </Link>
+        )}
       </div>
     </header>
   )

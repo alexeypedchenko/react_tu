@@ -1,11 +1,10 @@
 import '../styles/globals.scss'
 import type { AppProps } from 'next/app'
 import Layout from '../components/common/Layout/Layout'
-
-// store
 import StoreProviderHoc from '../store/StoreProviderHoc'
 
 function MyApp({ Component, pageProps }: AppProps) {
+
   return (
     <StoreProviderHoc>
       <Layout>
