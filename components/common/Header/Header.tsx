@@ -4,9 +4,11 @@ import styles from './Header.module.scss'
 import { links } from '../../../utils/links'
 import { signout } from '../../../firebase/firebaseAuth'
 import { useAppSelector } from '../../../hooks/useStore'
+import { selectUser } from '../../../store/reducers/user/userSlice'
 
 const Header: FC = () => {
-  const { isAuth } = useAppSelector((state) => state.user)
+  const { isAuth } = useAppSelector(selectUser)
+
   return (
     <header className={styles.header}>
       <div className={styles.link}>

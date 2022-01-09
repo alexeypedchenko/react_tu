@@ -1,0 +1,24 @@
+.page {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.title {
+  width: 100%;
+  margin-bottom: 20px;
+  font-size: 2em;
+  font-weight: 600;
+}
+.places {
+  width: 300px;
+}
+.place {
+  padding: 5px;
+  border: 2px solid lime;
+  &:not(:last-child) {
+    margin-bottom: 10px;
+  }
+}
+.map {
+  width: calc(100% - 320px);
+}

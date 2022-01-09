@@ -11,7 +11,9 @@ const Layout: FC = ({ children }) => {
       <Header />
 
       <main className={styles.main}>
-        {children}
+        <div className={styles.container}>
+          {children}
+        </div>
       </main>
 
       <footer>

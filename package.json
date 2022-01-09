@@ -8,6 +8,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@googlemaps/js-api-loader": "^1.13.1",
+    "@googlemaps/markerclustererplus": "^1.2.10",
     "@reduxjs/toolkit": "^1.7.1",
     "firebase": "^9.6.1",
     "next": "12.0.7",

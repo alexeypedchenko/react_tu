@@ -1,7 +1,9 @@
-import userReducer from './user/userSlice'
+import user from './user/userSlice'
+import place from './place/placeSlice'
 
 const rootReducer = {
-  user: userReducer,
+  user,
+  place,
 }
 
 export default rootReducer
