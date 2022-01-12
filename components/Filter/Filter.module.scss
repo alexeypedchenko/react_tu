@@ -1,0 +1,36 @@
+.filter {
+  width: 100%;
+  margin-bottom: 20px;
+}
+.list {
+  display: flex;
+}
+.item {
+  display: flex;
+  flex-direction: column;
+  span {
+    font-weight: 600;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+  &:not(:last-child) {
+    margin-right: 20px;
+  }
+
+  input, select {
+    outline: none;
+    padding: 5px 10px;
+  }
+}
+.clear {
+  width: 18px;
+  height: 18px;
+  font-size: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  cursor: pointer;
+}

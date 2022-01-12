@@ -1,11 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import { API_URL } from '../../../utils/api'
+import { getDbDocsByOrder } from '../../../firebase/firebaseFirestore'
+
+const collectionName = 'places'
 
 export const fetchPlaces = createAsyncThunk(
   'places/fetchPlaces',
-  async () => fetch(API_URL.places)
-    .then((res) => res.json())
-    .then((data) => data)
+  async () => getDbDocsByOrder(collectionName).then((docs) => docs)
 )
 
 const allAsyncThunks = {

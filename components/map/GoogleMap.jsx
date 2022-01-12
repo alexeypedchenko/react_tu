@@ -7,11 +7,15 @@ import { useActions, useAppSelector } from '../../hooks/useStore'
 
 const GoogleMap = () => {
   const { setActivePlace, setHoveredPlace } = useActions()
-  const { places, activePlace, hoveredPlace } = useAppSelector(selectPlace)
+  const { filteredPlaces, activePlace, hoveredPlace } = useAppSelector(selectPlace)
   const {
     previous: previousHoveredPlace,
     current: currentHoveredPlace
   } = usePrevious(hoveredPlace)
+  const {
+    previous: previousPlaces,
+    current: currentPlaces
+  } = usePrevious(filteredPlaces)
 
   const [map, setMap] = useState(null)
 
@@ -21,68 +25,67 @@ const GoogleMap = () => {
       onMarkerHover: (index) => { setHoveredPlace(index) },
     })
     gmap.init().then(() => {
-      gmap.setMarkers(places)
+      gmap.setMarkers(filteredPlaces)
     })
     setMap(gmap)
   }, [])
 
   useEffect(() => {
     if (!map) return
-    map.setMarkers(places)
-  }, [places])
-
-  useEffect(() => {
-    if (!map) return
-    if (
-      previousHoveredPlace !== null &&
-      currentHoveredPlace === null
-    ) {
-      map.removeLastMarker()
-      return
+    if (JSON.stringify(previousPlaces) !== JSON.stringify(currentPlaces)) {
+      map.setMarkers(filteredPlaces)
     }
-    if (
-      previousHoveredPlace === null &&
-      currentHoveredPlace !== null
-    ) {
-      map.handleCreateMarker(places[hoveredPlace])
-      return
-    }
-  }, [hoveredPlace])
-
-  useEffect(() => {
-    if (!map) return
-    if (activePlace != null) map.handleClickMarker(activePlace)
-  }, [activePlace])
-
-  // useEffect(() => {
-  //   if (!map) return
-  //   if (!route.length) {
-  //     map.route.clear()
-  //   }
-  //   map.route.draw(route)
-  // }, [route])
+  }, [filteredPlaces])
 
   const centeredMap = () => {
     map.centeredMap()
   }
 
+  useEffect(() => {
+    if (!map) return
+    if (previousHoveredPlace !== null && currentHoveredPlace === null) {
+      map.removeLastMarker()
+      return
+    }
+    if (previousHoveredPlace === null && currentHoveredPlace !== null) {
+      map.handleCreateMarker(filteredPlaces[hoveredPlace])
+      return
+    }
+  }, [hoveredPlace])
+
+  // useEffect(() => {
+  //   if (!map) return
+  //   if (
+  //     (previousActivePlace !== null && currentActivePlace !== null) &&
+  //     (previousActivePlace !== currentActivePlace)
+  //   ) {
+  //     map.handleClickMarker(currentActivePlace)
+  //     return
+  //   }
+  //   if (previousActivePlace !== null && currentActivePlace === null) {
+  //     map.handleClickMarker(previousActivePlace)
+  //     return
+  //   }
+  //   if (previousActivePlace === null && currentActivePlace !== null) {
+  //     map.handleClickMarker(currentActivePlace)
+  //     return
+  //   }
+  // }, [activePlace])
+
   return (
     <div className={styles.wrap}>
       <div className={styles.head}>
-        <div>
-          <h2>
-            Google map
-          </h2>
+        {/* <div>
           <p>active: {activePlace}</p>
           <p>hovered: {hoveredPlace}</p>
-          <button onClick={centeredMap}>
-            centeredMap
-          </button>
-        </div>
+        </div> */}
+        <button onClick={centeredMap}>
+          centeredMap
+        </button>
 
         {activePlace !== null && (
           <div className={styles.item}>
-            <p>{places[activePlace].name}</p>
+            <p>{filteredPlaces[activePlace].name}</p>
             <button onClick={() => { setActivePlace(null) }}>
               close
             </button>
@@ -96,3 +99,12 @@ const GoogleMap = () => {
 }
 
 export default GoogleMap
+
+// для отображения маршрута
+// useEffect(() => {
+//   if (!map) return
+//   if (!route.length) {
+//     map.route.clear()
+//   }
+//   map.route.draw(route)
+// }, [route])

@@ -1,33 +1,26 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { RootState, store } from '../../store'
-import { IPlace } from '../../../models/IPlace'
+import { RootState } from '../../store'
 import allThunks, { fetchPlaces } from './asyncThunks'
-
-// export interface IPlaceState {
-//   currentPlace: IPlace | null;
-//   places: IPlace[];
-//   activePlace: IPlace | null;
-//   hoveredPlace: IPlace | null;
-// }
+import { filterItems, getFilterList } from '../../../utils/filters'
 
 const initialState = {
-  currentPlace: null,
+  place: {},
   places: [],
+  filteredPlaces: [],
   activePlace: null,
   hoveredPlace: null,
+  filterList: {},
+  filter: {
+    name: '',
+    tags: '',
+    region: '',
+  }
 }
 
 export const placeSlice = createSlice({
   name: 'place',
   initialState,
   reducers: {
-    setCurrentPlace: (state, action: PayloadAction<number>) => {
-      if (state.currentPlace && state.currentPlace.id === action.payload) {
-        state.currentPlace = null
-      } else {
-        state.currentPlace = state.places.find((el) => el.id === action.payload) || null
-      }
-    },
     setPlaces: (state, action) => {
       state.places = action.payload
     },
@@ -36,6 +29,16 @@ export const placeSlice = createSlice({
     },
     setHoveredPlace: (state, action) => {
       state.hoveredPlace = action.payload
+    },
+    setFilter: (state, action) => {
+      const { name, value } = action.payload
+      state.filter[name] = value
+    },
+    setFilterList: (state, action) => {
+      state.filterList = getFilterList(action.payload.places, action.payload.filter)
+    },
+    setFilteredPlaces: (state, action) => {
+      state.filteredPlaces = filterItems(action.payload.places, action.payload.filter)
     },
   },
   extraReducers: {

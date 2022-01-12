@@ -57,7 +57,7 @@ export class GoogleMap {
       // добавляем маркер в массив
       this.markers.push(marker)
       // добавляем новую позицию маркера для центрирования карты
-      this.cluster.setPoint(markerData)
+      if (this.cluster) this.cluster.setPoint(markerData)
       // создаем модальное окно маркера
       this.createInfoWindow(markerData)
       // Добавляем события
@@ -65,7 +65,7 @@ export class GoogleMap {
     })
 
     // группируем маркеры в класстере
-    this.cluster.group(this.markers)
+    if (this.cluster) this.cluster.group(this.markers)
     this.centeredMap()
   }
 
@@ -132,13 +132,15 @@ export class GoogleMap {
     // Центрируем карту относительно одного маркера
     if (this.markers.length === 1) {
       this.map.setCenter(this.markers[0].getPosition())
-      this.map.setZoom(14)
+      this.map.setZoom(10)
       return
     }
 
     // если маркеров нет, сбрасываем центр в исходную позицию
-    this.map.setCenter(this.mapOptions.center)
-    this.map.setZoom(this.mapOptions.zoom)
+    if (this.map) {
+      this.map.setCenter(this.mapOptions.center)
+      this.map.setZoom(this.mapOptions.zoom)
+    }
   }
 
   rebotMapZoom() {
@@ -161,7 +163,7 @@ export class GoogleMap {
 
   addMarkerListeners(marker, index) {
     marker.addListener('click', () => {
-      this.toggleInfoWindow(marker, index)
+      // this.toggleInfoWindow(marker, index)
       if (typeof this.onMarkerClick === 'function') {
         this.onMarkerClick(index)
       }
@@ -206,10 +208,8 @@ export class GoogleMap {
   }
 
   clearMarkers() {
-    if (this.cluster) {
-      this.cluster.clear()
-    }
-    this.route.clear()
+    if (this.cluster) this.cluster.clear()
+    if (this.route) this.route.clear()
 
     this.markers.forEach((marker, index) => {
       this.markers[index].setMap(null)
@@ -220,11 +220,14 @@ export class GoogleMap {
 
   // имитация экшинов по меркеру с внешних методов
   handleClickMarker(index) {
-    // имитируем клик по маркеру
     const marker = this.markers[index]
-    google.maps.event.trigger(marker, 'click')
-    this.map.setCenter(marker.getPosition())
-    this.map.setZoom(16)
+    this.toggleInfoWindow(marker, index)
+
+    // имитируем клик по маркеру
+    // WARNING: имитирование клика вызывает функцию callback после клика на маркер
+    // google.maps.event.trigger(marker, 'click')
+    // this.map.setCenter(marker.getPosition())
+    // this.map.setZoom(16)
   }
   handleMarkerMouseover(index) {
     // Реализовать подсветку маркера

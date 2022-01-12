@@ -37,7 +37,6 @@ export const GoogleLogin = () => {
     });
 };
 
-
 export const signup = ({ email, password }: IUserCredentials) => new Promise((res, rej) => {
   createUserWithEmailAndPassword(auth, email, password).then((userCredential) => {
     const user = userCredential.user
