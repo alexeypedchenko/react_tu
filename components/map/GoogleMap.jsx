@@ -1,99 +1,45 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import styles from './GoogleMap.module.scss'
-import { GoogleMap as GMap } from '../../googleMap/googleMap'
+import MapBox from './MapBox/MapBox'
 import { usePrevious } from '../../hooks/usePrevious'
 import { selectPlace } from '../../store/reducers/place/placeSlice'
 import { useActions, useAppSelector } from '../../hooks/useStore'
 
 const GoogleMap = () => {
+  const map = useRef(null)
   const { setActivePlace, setHoveredPlace } = useActions()
   const { filteredPlaces, activePlace, hoveredPlace } = useAppSelector(selectPlace)
-  const {
-    previous: previousHoveredPlace,
-    current: currentHoveredPlace
-  } = usePrevious(hoveredPlace)
-  const {
-    previous: previousPlaces,
-    current: currentPlaces
-  } = usePrevious(filteredPlaces)
-
-  const [map, setMap] = useState(null)
+  const { previous: previousHoveredPlace, current: currentHoveredPlace } = usePrevious(hoveredPlace)
 
   useEffect(() => {
-    const gmap = new GMap('#map', {
-      onMarkerClick: (index) => { setActivePlace(index) },
-      onMarkerHover: (index) => { setHoveredPlace(index) },
-    })
-    gmap.init().then(() => {
-      gmap.setMarkers(filteredPlaces)
-    })
-    setMap(gmap)
+    setHoveredPlace(null)
   }, [])
 
   useEffect(() => {
     if (!map) return
-    if (JSON.stringify(previousPlaces) !== JSON.stringify(currentPlaces)) {
-      map.setMarkers(filteredPlaces)
+    if (previousHoveredPlace !== null && currentHoveredPlace !== null) {
+      map.current.removeLastMarker()
+      map.current.handleCreateMarker(filteredPlaces[hoveredPlace])
+      return
     }
-  }, [filteredPlaces])
-
-  const centeredMap = () => {
-    map.centeredMap()
-  }
-
-  useEffect(() => {
-    if (!map) return
     if (previousHoveredPlace !== null && currentHoveredPlace === null) {
-      map.removeLastMarker()
+      map.current.removeLastMarker()
       return
     }
     if (previousHoveredPlace === null && currentHoveredPlace !== null) {
-      map.handleCreateMarker(filteredPlaces[hoveredPlace])
+      map.current.handleCreateMarker(filteredPlaces[hoveredPlace])
       return
     }
   }, [hoveredPlace])
 
-  // useEffect(() => {
-  //   if (!map) return
-  //   if (
-  //     (previousActivePlace !== null && currentActivePlace !== null) &&
-  //     (previousActivePlace !== currentActivePlace)
-  //   ) {
-  //     map.handleClickMarker(currentActivePlace)
-  //     return
-  //   }
-  //   if (previousActivePlace !== null && currentActivePlace === null) {
-  //     map.handleClickMarker(previousActivePlace)
-  //     return
-  //   }
-  //   if (previousActivePlace === null && currentActivePlace !== null) {
-  //     map.handleClickMarker(currentActivePlace)
-  //     return
-  //   }
-  // }, [activePlace])
-
   return (
     <div className={styles.wrap}>
-      <div className={styles.head}>
-        {/* <div>
-          <p>active: {activePlace}</p>
-          <p>hovered: {hoveredPlace}</p>
-        </div> */}
-        <button onClick={centeredMap}>
-          centeredMap
-        </button>
-
-        {activePlace !== null && (
-          <div className={styles.item}>
-            <p>{filteredPlaces[activePlace].name}</p>
-            <button onClick={() => { setActivePlace(null) }}>
-              close
-            </button>
-          </div>
-        )}
-      </div>
-
-      <div id="map" className={styles.map}></div>
+      <MapBox
+        ref={map}
+        markers={filteredPlaces}
+        onMarkerClick={setActivePlace}
+        onMarkerHover={setHoveredPlace}
+      />
     </div>
   )
 }

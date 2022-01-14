@@ -184,6 +184,9 @@ export class GoogleMap {
 
   addMapListeners() {
     this.map.addListener('click', () => {
+      if (typeof this.onMarkerClick === 'function') {
+        this.onMarkerClick(null)
+      }
       this.closeAllInfoWindows()
     })
   }

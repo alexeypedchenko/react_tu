@@ -1,6 +1,6 @@
 import React from 'react'
 import styles from './Place.module.scss'
-import PlaceItem from './PlaceItem'
+import PlaceItem from './PlaceItem/PlaceItem'
 import { useActions, useAppSelector } from '../../hooks/useStore'
 import { selectPlace } from '../../store/reducers/place/placeSlice'
 

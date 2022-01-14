@@ -1,9 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from '../../store'
-import allThunks, { fetchPlaces } from './asyncThunks'
 import { filterItems, getFilterList } from '../../../utils/filters'
+import allThunks, {
+  fetchPlaces,
+  fetchPlace,
+} from './asyncThunks'
 
 const initialState = {
+  load: false,
+  error: '',
   place: {},
   places: [],
   filteredPlaces: [],
@@ -30,6 +35,12 @@ export const placeSlice = createSlice({
     setHoveredPlace: (state, action) => {
       state.hoveredPlace = action.payload
     },
+
+    clearError: (state, action) => {
+      state.error = ''
+    },
+
+    // filter
     setFilter: (state, action) => {
       const { name, value } = action.payload
       state.filter[name] = value
@@ -41,20 +52,36 @@ export const placeSlice = createSlice({
       state.filteredPlaces = filterItems(action.payload.places, action.payload.filter)
     },
   },
+
   extraReducers: {
-    // [fetchPlaces.pending.type]: (state, action) => {
-    //   state.request = true
-    //   state.error = false
-    // },
+    [fetchPlaces.pending.type]: (state, action) => {
+      state.load = true
+      state.error = ''
+    },
     [fetchPlaces.fulfilled.type]: (state, action) => {
-      // state.request = false
+      state.load = false
       state.places = action.payload
     },
-    // [fetchPlaces.rejected.type]: (state, action) => {
-    //   state.request = false
-    //   state.ingredients = []
-    //   state.error = action.error.message
-    // },
+    [fetchPlaces.rejected.type]: (state, action) => {
+      state.load = false
+      state.places = []
+      state.error = action.error.message
+    },
+
+    // load: false,
+    // error: '',
+    [fetchPlace.pending.type]: (state, action) => {
+      state.load = true
+      state.error = ''
+    },
+    [fetchPlace.fulfilled.type]: (state, action) => {
+      state.load = false
+      state.places.push(action.payload)
+    },
+    [fetchPlace.rejected.type]: (state, action) => {
+      state.load = false
+      state.error = action.error.message
+    },
   }
 })
 

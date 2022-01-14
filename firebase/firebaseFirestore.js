@@ -15,6 +15,11 @@ import {
 initApp()
 const db = getFirestore()
 
+
+const formatTimestampToDate = (prop) => {
+  return `${prop.toDate()}`
+}
+
 export const addDbDoc = (collectionName, doc) => new Promise(async (res, rej) => {
   // serverTimestamp
   doc.createdAt = serverTimestamp()
@@ -28,16 +33,20 @@ export const addDbDoc = (collectionName, doc) => new Promise(async (res, rej) =>
     rej(e)
   }
 })
+
 export const getDbDoc = (collectionName, docId) => new Promise(async (res, rej) => {
   const docRef = doc(db, collectionName, docId)
   const docSnap = await getDoc(docRef)
 
   if (docSnap.exists()) {
-    res({ id: docId, ...docSnap.data() })
+    const docData = docSnap.data()
+    docData.createdAt = formatTimestampToDate(docData.createdAt)
+    docData.changedAt = formatTimestampToDate(docData.changedAt)
+    res({ id: docId, ...docData })
   } else {
     // doc.data() will be undefined in this case
-    console.log("No such document!")
-    rej(null)
+    // console.log()
+    rej("No such document!")
   }
 })
 export const updateDbDoc = (collectionName, docId, docData) => new Promise(async (res, rej) => {
