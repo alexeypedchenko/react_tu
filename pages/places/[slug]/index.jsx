@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import { useActions, useAppSelector } from '../../../hooks/useStore'
 import { selectPlace } from '../../../store/reducers/place/placeSlice'
 import PlacePage from '../../../components/Place/PlacePage/PlacePage'
+import { selectPage } from '../../../store/reducers/page/pageSlice'
 
 // if fetchPlace is active
 // useEffect(() => {
@@ -14,20 +15,32 @@ import PlacePage from '../../../components/Place/PlacePage/PlacePage'
 const Index = () => {
   const router = useRouter()
   const { slug } = router.query
-  const { fetchPlace, clearError } = useActions()
-  const { places, load, error } = useAppSelector(selectPlace)
+  const { fetchPage } = useActions()
+  const { places } = useAppSelector(selectPlace)
+  const { pages, load, error } = useAppSelector(selectPage)
+
   const [place, setPlace] = useState(null)
+  const [page, setPage] = useState(null)
 
   useEffect(() => {
     if (!slug) return
-    const index = places.findIndex((place) => place.id === slug)
+    const pageIndex = pages.findIndex((place) => place.id === slug)
+    if (pageIndex !== -1) {
+      setPage(pages[pageIndex])
+    } else {
+      fetchPage(slug)
+    }
+  }, [slug, pages])
 
-    if (index !== -1) {
-      setPlace(places[index])
+  useEffect(() => {
+    if (!slug) return
+    const placeIndex = places.findIndex((place) => place.id === slug)
+    if (placeIndex !== -1) {
+      setPlace(places[placeIndex])
     }
 
-    if (index === -1 && places.length > 0) {
-      console.log('index === -1 && places.length > 0:')
+    if (placeIndex === -1 && places.length > 0) {
+      console.log('placeIndex === -1 && places.length > 0:')
       router.push('/places')
     }
   }, [slug, places])
@@ -39,7 +52,7 @@ const Index = () => {
   return (
     <div>
       slug: {slug}
-      <PlacePage place={place} />
+      <PlacePage place={place} page={page} />
     </div>
   )
 }

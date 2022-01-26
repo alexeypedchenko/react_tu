@@ -1,7 +1,39 @@
 .page {}
+.head {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  i {
+    margin: 0 5px;
+    color: green;
+  }
+}
+.title {
+  text-align: center;
+  font-size: 40px;
+  margin-bottom: 40px;
+}
 .image {
   width: 100%;
-  height: auto;
+  height: 500px;
   display: block;
-  margin-bottom: 50px;
+  margin-bottom: 40px;
+  object-fit: cover;
+}
+.description {
+  margin-bottom: 40px;
+  font-size: 18px;
+  line-height: 1.4;
+}
+.content {
+  width: 700px;
+  max-width: 100%;
+  margin: 0 auto;
+}
+.map {
+  width: 100%;
+  // border-radius: 4px;
+  // overflow: hidden;
+  // box-shadow: 0 5px 15px 0 rgba(#000, 0.2);
 }

@@ -33,7 +33,7 @@ export class GoogleMap {
       streetViewControl: false,
       rotateControl: false,
       fullscreenControl: true,
-      scrollwheel: true, // возможность масштабировать карту мышкой или тачпадом
+      // scrollwheel: true, // возможность масштабировать карту мышкой или тачпадом
     }
     this.markers = []
     this.infoWindows = []
