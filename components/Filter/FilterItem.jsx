@@ -1,5 +1,6 @@
 import React from 'react'
 import styles from './Filter.module.scss'
+import { filterRu } from '../../utils/translate'
 
 const FilterItem = ({ name, list, onChange, value }) => {
   const clear = () => {
@@ -10,7 +11,7 @@ const FilterItem = ({ name, list, onChange, value }) => {
   return (
     <div className={styles.item}>
       <span>
-        {name}:
+        {filterRu[name]}:
         {value && (<button className={styles.clear} onClick={clear}>x</button>)}
       </span>
 

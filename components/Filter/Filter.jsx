@@ -21,7 +21,7 @@ const Filter = () => {
     <div className={styles.filter}>
       <div className={styles.list}>
         <div className={styles.item}>
-          <span>Name:</span>
+          <span>Название:</span>
           <input
             type="text"
             name="name"
@@ -41,7 +41,7 @@ const Filter = () => {
           />
         ))}
       </div>
-      <pre>{JSON.stringify(filter)}</pre>
+      {/* <pre>{JSON.stringify(filter)}</pre> */}
     </div>
   )
 }

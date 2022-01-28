@@ -51,7 +51,7 @@ const Index = () => {
 
   return (
     <div>
-      slug: {slug}
+      {/* slug: {slug} */}
       <PlacePage place={place} page={page} />
     </div>
   )

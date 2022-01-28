@@ -23,6 +23,7 @@
   padding: 10px;
   display: flex;
   flex-direction: column;
+  height: 100%;
 }
 .topbar {
   display: flex;
@@ -80,11 +81,11 @@
   line-height: 1;
   text-transform: uppercase;
   font-size: 14px;
-  border: 1px solid #000;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #fff;
+  background: $main;
+  margin-top: auto;
   &:hover {
     background: #000;
     color: #fff;
