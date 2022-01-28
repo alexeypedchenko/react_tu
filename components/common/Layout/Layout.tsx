@@ -18,9 +18,9 @@ const Layout: FC = ({ children }) => {
         </div>
       </main>
 
-      <footer>
+      {/* <footer>
         footer
-      </footer>
+      </footer> */}
     </div>
   )
 }

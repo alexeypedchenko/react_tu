@@ -1,15 +1,15 @@
 import React from 'react'
-import styles from './Place.module.scss'
-import PlaceItem from './PlaceItem/PlaceItem'
-import { useActions, useAppSelector } from '../../hooks/useStore'
-import { selectPlace } from '../../store/reducers/place/placeSlice'
+import styles from './PlaceList.module.scss'
+import PlaceItem from '../PlaceItem/PlaceItem'
+import { useActions, useAppSelector } from '../../../hooks/useStore'
+import { selectPlace } from '../../../store/reducers/place/placeSlice'
 
 const PlaceList = () => {
   const { setActivePlace, setHoveredPlace } = useActions()
   const { filteredPlaces, activePlace } = useAppSelector(selectPlace)
 
   return (
-    <div className={styles.list}>
+    <>
       {filteredPlaces.map((place, idx) => (
         <PlaceItem
           place={place}
@@ -20,7 +20,7 @@ const PlaceList = () => {
           active={activePlace === idx}
         />
       ))}
-    </div>
+    </>
   )
 }
 
