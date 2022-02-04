@@ -3,15 +3,14 @@ import styles from './styles.module.scss'
 import GoogleMap from '../../components/map/GoogleMap'
 import Filter from '../../components/Filter/Filter'
 import PlaceList from '../../components/Place/PlaceList/PlaceList'
-import { useState } from 'react'
-
-const visibilityTypes: {[key: string]: string} = {
-  map: 'Карта /\\/',
-  grid: 'Сетка #'
-}
+import { useVisibilityType } from '../../hooks/useVisibilityType'
 
 const Places: NextPage = () => {
-  const [visibilityType, setVisibilityType] = useState<string>('map');
+  const {
+    visibilityTypes,
+    visibilityType,
+    setVisibilityType
+  } = useVisibilityType('places')
 
   return (
     <div className={styles.page}>

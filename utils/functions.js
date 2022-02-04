@@ -11,3 +11,12 @@ export const getUniqueCollection = (arr = [], name = '', isArray = false) => {
   })
   return Array.from(setCollection)
 }
+
+export const setLocalStorage = (name = '', data) => {
+  if (!name || !data) return
+  localStorage.setItem(name, JSON.stringify(data))
+}
+export const getLocalStorage = (name = '') => {
+  const data = JSON.parse(localStorage.getItem(name))
+  return data
+}

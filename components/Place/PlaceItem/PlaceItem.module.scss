@@ -52,6 +52,7 @@
   font-weight: 600;
   margin: 0;
   margin-bottom: 10px;
+  margin-top: auto;
 }
 .description {
   font-size: 14px;
@@ -85,7 +86,6 @@
   justify-content: center;
   align-items: center;
   background: $main;
-  margin-top: auto;
   &:hover {
     background: #000;
     color: #fff;
