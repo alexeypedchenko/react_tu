@@ -1,0 +1,21 @@
+.aside {
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-self: flex-start;
+  background: #efefef;
+  margin-right: 20px;
+  padding: 20px;
+}
+.link {
+  color: #000;
+  &:not(:last-child) {
+    margin-bottom: 20px;
+  }
+  &:hover {
+    text-decoration: underline;
+  }
+}
+.activeLink {
+  text-decoration: underline;
+}

@@ -7,21 +7,23 @@ const visibilityTypes: {[key: string]: string} = {
 }
 
 export const useVisibilityType = (hash = '') => {
-  const [visibilityType, setVisibilityType] = useState<string>('map');
+  const [visibilityType, setVisibilityType] = useState<string>('grid');
   const value = `${hash}_visibilityType`
 
-  useEffect(() => {
-    const localType = getLocalStorage(value)
-    if (localType) {
-      setVisibilityType(localType)
-    } else {
-      setLocalStorage(value, visibilityType)
-    }
-  }, [])
+  // useEffect(() => {
+  //   const localType = getLocalStorage(value)
+  //   if (localType) {
+  //     setVisibilityType(localType)
+  //   } else {
+  //     setLocalStorage(value, visibilityType)
+  //   }
+  //   return () => {}
+  // }, [])
 
-  useEffect(() => {
-    setLocalStorage(value, visibilityType)
-  }, [visibilityType])
+  // useEffect(() => {
+  //   setLocalStorage(value, visibilityType)
+  //   return () => {}
+  // }, [visibilityType])
 
   return {
     visibilityType,

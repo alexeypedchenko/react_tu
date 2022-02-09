@@ -3,8 +3,21 @@ export interface ILink {
   path: string;
 }
 
+export const paths: { [key: string]: string } = {
+  home: '/',
+  places: '/places',
+
+  // profile
+  profile: '/profile',
+  favoritePlaces: '/profile/favorite-places'
+}
+
 export const links: ILink[] = [
-  { name: 'Home', path: '/' },
-  { name: 'Places', path: '/places' },
-  { name: 'Profile', path: '/profile' },
+  { name: 'Главная', path: paths.home },
+  { name: 'Места', path: paths.places },
+]
+
+export const profileLinks: ILink[] = [
+  { name: 'Профиль', path: paths.profile },
+  { name: 'Избранные места', path: paths.favoritePlaces },
 ]

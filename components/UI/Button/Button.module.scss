@@ -1,0 +1,19 @@
+@import '../../../styles/variables.scss';
+
+.button {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  border: none;
+  padding: 8px 20px;
+  background: $main;
+  font-size: 16px;
+  font-weight: 500;
+  &:hover {
+    background: $dark_main;
+  }
+  & > span {
+    margin-right: 10px !important;
+    margin-left: -5px !important;
+  }
+}

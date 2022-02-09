@@ -1,0 +1,15 @@
+.layout {
+  display: flex;
+  // flex-wrap: wrap;
+  padding-top: 20px;
+}
+.title {
+  width: 100%;
+  margin-bottom: 20px;
+  font-size: 32px;
+}
+.main {
+  background: #efefef;
+  padding: 20px;
+  width: calc(100% - 320px);
+}

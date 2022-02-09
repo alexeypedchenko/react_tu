@@ -4,6 +4,7 @@ import {
   collection,
   doc,
   addDoc,
+  setDoc,
   updateDoc,
   getDoc,
   getDocs,
@@ -22,8 +23,8 @@ const formatTimestampToDate = (prop) => {
 
 export const addDbDoc = (collectionName, doc) => new Promise(async (res, rej) => {
   // serverTimestamp
-  doc.createdAt = serverTimestamp()
-  doc.changedAt = serverTimestamp()
+  doc.createdAt = new Date().toLocaleString('uk-Ua')
+  doc.changedAt = new Date().toLocaleString('uk-Ua')
   try {
     const docRef = await addDoc(collection(db, collectionName), doc)
     console.log("Document written with ID: ", docRef.id)
@@ -34,14 +35,23 @@ export const addDbDoc = (collectionName, doc) => new Promise(async (res, rej) =>
   }
 })
 
+export const setDbDoc = async (collectionName, docId, docData) => new Promise(async (res, rej) => {
+  docData.createdAt = new Date().toLocaleString('uk-Ua')
+  docData.changedAt = new Date().toLocaleString('uk-Ua')
+  try {
+    await setDoc(doc(db, collectionName, docId), docData)
+    res(true)
+  } catch (error) {
+    rej(`doc ${docId} not created`)
+  }
+})
+
 export const getDbDoc = (collectionName, docId) => new Promise(async (res, rej) => {
   const docRef = doc(db, collectionName, docId)
   const docSnap = await getDoc(docRef)
 
   if (docSnap.exists()) {
     const docData = docSnap.data()
-    docData.createdAt = formatTimestampToDate(docData.createdAt)
-    docData.changedAt = formatTimestampToDate(docData.changedAt)
     res({ id: docId, ...docData })
   } else {
     // doc.data() will be undefined in this case
@@ -50,11 +60,12 @@ export const getDbDoc = (collectionName, docId) => new Promise(async (res, rej) 
   }
 })
 export const updateDbDoc = (collectionName, docId, docData) => new Promise(async (res, rej) => {
-  docData.changedAt = serverTimestamp()
+  docData.changedAt = new Date().toLocaleString('uk-Ua')
+  delete docData.id
   const docRef = doc(db, collectionName, docId)
   try {
-    const updateTimestamp = await updateDoc(docRef, docData)
-    res(true)
+    await updateDoc(docRef, docData)
+    res(docData)
   } catch (error) {
     console.log('error:', error)
     rej(error)
@@ -75,7 +86,11 @@ export const getDbDocs = async (collectionName) => {
     console.log(`${doc.id} => `, doc.data())
   })
 }
-export const getDbDocsByOrder = (collectionName, orderField = 'createdAt', desc = true) => new Promise(async (res, rej) => {
+export const getDbDocsByOrder = (
+  collectionName,
+  orderField = 'createdAt',
+  desc = true
+) => new Promise(async (res, rej) => {
   // "asc" - ASC (ASCENDING - дословно "по возрастанию")
   // "desc" - DESC (DESCENDING - дословно "по убыванию")
 
@@ -87,13 +102,9 @@ export const getDbDocsByOrder = (collectionName, orderField = 'createdAt', desc 
     const docs = []
     querySnapshot.forEach((doc) => {
       const docData = doc.data()
-      const createdAt = `${docData.createdAt.toDate()}`
-      const changedAt = `${docData.changedAt.toDate()}`
       docs.push({
         id: doc.id,
         ...docData,
-        createdAt,
-        changedAt
       })
     })
     res(docs)

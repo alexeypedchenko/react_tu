@@ -1,23 +1,21 @@
 import type { NextPage } from 'next'
-import { useRouter } from 'next/router'
-import { useEffect } from 'react'
+import ProfileLayout from '../../components/Profile/ProfileLayout/ProfileLayout'
 import { useAppSelector } from '../../hooks/useStore'
 import { selectUser } from '../../store/reducers/user/userSlice'
 
 const Profile: NextPage = () => {
-  const { isAuth } = useAppSelector(selectUser)
-  const router = useRouter()
-
-  useEffect(() => {
-    if (!isAuth) {
-      router.push('/login')
-    }
-  }, [isAuth])
-
+  const { user, userData } = useAppSelector(selectUser)
+  console.log('user:', user)
+  console.log('userData:', userData)
   return (
-    <div>
-      Profile page
-    </div>
+    <ProfileLayout title="Информация о пользователе">
+      {Object.keys(user).map((key) => (
+        <div key={key}>
+          {key}: {user[key]}
+          <hr />
+        </div>
+      ))}
+    </ProfileLayout>
   )
 }
 

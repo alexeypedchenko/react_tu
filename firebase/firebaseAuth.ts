@@ -70,7 +70,10 @@ export const signout = () => new Promise((res, rej) => {
 export const authWatcher = (cb: (user: IUser | null, isAuth: boolean) => void) =>
   onAuthStateChanged(auth, (user) => {
     if (user) {
-      const userData = user.providerData[0]
+      const userData = {
+        id: user.uid,
+        ...user.providerData[0]
+      }
       cb(userData, true)
     } else {
       cb(null, false)

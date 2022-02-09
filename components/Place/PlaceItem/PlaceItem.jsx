@@ -1,9 +1,30 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import Link from 'next/link'
 import styles from './PlaceItem.module.scss'
+import CheckAuth from '../../common/CheckAuth/CheckAuth'
+import { useActions, useAppSelector } from '../../../hooks/useStore'
+import { selectUser } from '../../../store/reducers/user/userSlice'
 
 const PlaceItem = ({ place, active, onClick, onMouseEnter, onMouseLeave }) => {
-  const createdAt = new Date(place.createdAt).toLocaleDateString('uk-UA')
+  const { updateUserData } = useActions()
+  const { isAuth, user, userData } = useAppSelector(selectUser)
+
+  const toFavorite = () => {
+    const data = JSON.parse(JSON.stringify(userData))
+    if (data.favoritePlaces.includes(place.id)) {
+      const agree = confirm('Вы действительно хотите удалить место из избранных?');
+      if (!agree) return
+      data.favoritePlaces = data.favoritePlaces.filter((placeId) => placeId !== place.id)
+    } else {
+      data.favoritePlaces.push(place.id)
+    }
+    updateUserData({id: user.id, data})
+  }
+
+  const isFavorite = useMemo(() => {
+    return isAuth ? userData.favoritePlaces.includes(place.id) : false
+  }, [userData])
+
   return (
     <div
       className={`${styles.item} ${active ? styles.itemActive : ''}`}
@@ -26,12 +47,12 @@ const PlaceItem = ({ place, active, onClick, onMouseEnter, onMouseLeave }) => {
               ))}
             </div>
           )}
-          <span className={styles.like}>
-            ★
-            {/* ☆ */}
-          </span>
+          <CheckAuth action={toFavorite}>
+            <span className={styles.like}>
+              {isFavorite ? '★' : '☆'}
+            </span>
+          </CheckAuth>
         </div>
-
 
         <span className={styles.name}>
           {place.name}
