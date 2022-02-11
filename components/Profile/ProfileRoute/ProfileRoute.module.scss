@@ -1,0 +1,12 @@
+.places {
+  display: flex;
+  // align-items: stretch;
+  flex-wrap: wrap;
+  margin-top: 20px;
+  & > div {
+    cursor: pointer;
+    width: 250px;
+    margin-right: 10px;
+    margin-bottom: 20px;
+  }
+}

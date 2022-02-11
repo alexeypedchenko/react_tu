@@ -9,7 +9,7 @@ const Profile: NextPage = () => {
   console.log('userData:', userData)
   return (
     <ProfileLayout title="Информация о пользователе">
-      {Object.keys(user).map((key) => (
+      {user && Object.keys(user).map((key) => (
         <div key={key}>
           {key}: {user[key]}
           <hr />
