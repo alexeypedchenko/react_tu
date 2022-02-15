@@ -4,7 +4,7 @@ import PlaceItem from '../PlaceItem/PlaceItem'
 import { useActions, useAppSelector } from '../../../hooks/useStore'
 import { selectPlace } from '../../../store/reducers/place/placeSlice'
 
-const PlaceList = ({ onClick }) => {
+const PlaceList = ({ showOnMap, onClick }) => {
   const { setActivePlace, setHoveredPlace } = useActions()
   const { filteredPlaces, activePlace } = useAppSelector(selectPlace)
 
@@ -17,6 +17,7 @@ const PlaceList = ({ onClick }) => {
           onClick={() => onClick(place)}
           onMouseEnter={() => setHoveredPlace(idx)}
           onMouseLeave={() => setHoveredPlace(null)}
+          showOnMap={showOnMap}
           // active={activePlace === idx}
         />
       ))}
@@ -25,6 +26,7 @@ const PlaceList = ({ onClick }) => {
 }
 
 PlaceList.defaultProps = {
+  showOnMap: false,
   onClick: () => {},
 }
 

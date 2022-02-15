@@ -9,12 +9,11 @@ const CheckAuth = ({ action, children }) => {
   const [modalOpen, setModapOpen] = useState(false)
 
   const handleClick = (event) => {
-    event.stopPropagation()
     if (userDataLoad) return
 
-    if (isAuth) {
-      action()
-    } else {
+    if (!isAuth) {
+      event.stopPropagation()
+      event.preventDefault()
       setModapOpen(true)
       console.log('you need to auth')
     }
@@ -27,17 +26,19 @@ const CheckAuth = ({ action, children }) => {
   }, [isAuth])
 
   return (
-    <div onClick={handleClick}>
-      {children}
+    <>
+      <div onClickCapture={handleClick}>
+        {children}
+      </div>
       <Modal open={modalOpen} setOpen={() => setModapOpen(false)}>
         <Signin />
       </Modal>
-    </div>
+    </>
   );
 };
 
 CheckAuth.defaultProps = {
-  action: () => {}
+  action: () => { }
 }
 
 export default CheckAuth;

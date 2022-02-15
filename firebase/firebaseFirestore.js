@@ -11,11 +11,11 @@ import {
   deleteDoc,
   query,
   orderBy,
+  where,
   serverTimestamp,
 } from 'firebase/firestore'
 initApp()
 const db = getFirestore()
-
 
 const formatTimestampToDate = (prop) => {
   return `${prop.toDate()}`
@@ -61,7 +61,6 @@ export const getDbDoc = (collectionName, docId) => new Promise(async (res, rej) 
 })
 export const updateDbDoc = (collectionName, docId, docData) => new Promise(async (res, rej) => {
   docData.changedAt = new Date().toLocaleString('uk-Ua')
-  delete docData.id
   const docRef = doc(db, collectionName, docId)
   try {
     await updateDoc(docRef, docData)
@@ -72,6 +71,8 @@ export const updateDbDoc = (collectionName, docId, docData) => new Promise(async
   }
 })
 export const deleteDbDoc = (collectionName, docId) => new Promise(async (res, rej) => {
+  console.log('collectionName:', collectionName)
+  console.log('docId:', docId)
   try {
     await deleteDoc(doc(db, collectionName, docId))
     res(docId)
@@ -107,6 +108,26 @@ export const getDbDocsByOrder = (
         ...docData,
       })
     })
+    res(docs)
+  } catch (err) {
+    console.log('err:', err)
+    rej(err)
+  }
+})
+
+export const getDbDocsByField = (
+  collectionName = null,
+  field = null,
+  value = null
+) => new Promise(async (res, rej) => {
+  if (collectionName === null || field === null || value === null) {
+    rej('Заполните все поля для получения коллекции!')
+  }
+  try {
+    const q = query(collection(db, collectionName), where(field, "==", value));
+    const querySnapshot = await getDocs(q);
+    const docs = []
+    querySnapshot.forEach((doc) => {docs.push({id: doc.id, ...doc.data()})})
     res(docs)
   } catch (err) {
     console.log('err:', err)

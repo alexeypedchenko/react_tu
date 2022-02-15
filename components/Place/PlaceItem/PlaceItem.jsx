@@ -1,29 +1,50 @@
-import React, { useMemo } from 'react'
+import React, { useMemo, useState } from 'react'
 import Link from 'next/link'
 import styles from './PlaceItem.module.scss'
 import CheckAuth from '../../common/CheckAuth/CheckAuth'
 import { useActions, useAppSelector } from '../../../hooks/useStore'
 import { selectUser } from '../../../store/reducers/user/userSlice'
+import Button from '../../UI/Button/Button'
+import Modal from '../../UI/Modal/Modal'
+import MapBox from '../../map/MapBox/MapBox'
+import ConfirmAction from '../../common/ConfirmAction/ConfirmAction'
 
-const PlaceItem = ({ place, active, onClick, onMouseEnter, onMouseLeave }) => {
+const PlaceItem = ({ place, active, small, showOnMap, onClick, onMouseEnter, onMouseLeave }) => {
   const { updateUserData } = useActions()
   const { isAuth, user, userData } = useAppSelector(selectUser)
+  const [openMap, setOpenMap] = useState(false)
 
   const toFavorite = () => {
     const data = JSON.parse(JSON.stringify(userData))
     if (data.favoritePlaces.includes(place.id)) {
-      const agree = confirm('Вы действительно хотите удалить место из избранных?');
-      if (!agree) return
       data.favoritePlaces = data.favoritePlaces.filter((placeId) => placeId !== place.id)
     } else {
       data.favoritePlaces.push(place.id)
     }
-    updateUserData({id: user.id, data})
+    updateUserData({ id: user.id, data })
   }
 
   const isFavorite = useMemo(() => {
     return isAuth ? userData.favoritePlaces.includes(place.id) : false
   }, [userData])
+
+  if (small) return (
+    <div
+      className={`${styles.smallItem} ${active ? styles.itemActive : ''}`}
+      onClick={onClick}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+    >
+      <img
+        className={styles.smallImage}
+        src={place.image}
+        alt={place.name}
+      />
+      <span className={styles.smallName}>
+        {place.name}
+      </span>
+    </div>
+  )
 
   return (
     <div
@@ -47,10 +68,17 @@ const PlaceItem = ({ place, active, onClick, onMouseEnter, onMouseLeave }) => {
               ))}
             </div>
           )}
-          <CheckAuth action={toFavorite}>
-            <span className={styles.like}>
+
+          <CheckAuth>
+            <ConfirmAction
+              text="Удалить место из избранного"
+              showDialog={isFavorite}
+              action={toFavorite}
+              tag="span"
+              className={styles.like}
+            >
               {isFavorite ? '★' : '☆'}
-            </span>
+            </ConfirmAction>
           </CheckAuth>
         </div>
 
@@ -62,7 +90,15 @@ const PlaceItem = ({ place, active, onClick, onMouseEnter, onMouseLeave }) => {
           {place.description}
         </span>
 
-
+        {showOnMap && (
+          <Button
+            text="Показать на карте"
+            onClick={(event) => {
+              event.stopPropagation()
+              setOpenMap(true)
+            }}
+          />
+        )}
 
         <Link href={`/places/${place.id}`}>
           <a className={styles.more} onClick={(event) => event.stopPropagation()}>
@@ -70,12 +106,23 @@ const PlaceItem = ({ place, active, onClick, onMouseEnter, onMouseLeave }) => {
           </a>
         </Link>
 
-        {/* <span className={styles.date}>
-          {createdAt}
-        </span> */}
+        {openMap && (
+          <Modal open={openMap} setOpen={() => setOpenMap(false)}>
+            <MapBox markers={[place]} />
+          </Modal>
+        )}
       </div>
     </div>
   )
+}
+
+PlaceItem.defaultProps = {
+  active: false,
+  small: false,
+  showOnMap: false,
+  onClick: () => { },
+  onMouseEnter: () => { },
+  onMouseLeave: () => { },
 }
 
 export default PlaceItem

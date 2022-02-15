@@ -1,4 +1,5 @@
 import React from 'react';
+import { createPortal } from 'react-dom'
 import styles from './Modal.module.scss'
 
 const Modal = ({ open, setOpen, children }) => {
@@ -7,21 +8,19 @@ const Modal = ({ open, setOpen, children }) => {
     setOpen()
   }
 
-  return (
-    <div
-      className={`${styles.modal} ${open ? styles.modalOpen : ''}`}
-      onClick={handleClick}
-    >
+  return open ? createPortal(
+    <div className={styles.modal} onClick={handleClick}>
       <div className={styles.body} onClick={(event) => event.stopPropagation()}>
         {children}
       </div>
-    </div>
-  );
+    </div>,
+    document.querySelector("#portal-modal")
+  ) : null;
 };
 
 Modal.defaultProps = {
   open: false,
-  setOpen: () => {}
+  setOpen: () => { }
 }
 
 export default Modal;

@@ -20,3 +20,7 @@ export const getLocalStorage = (name = '') => {
   const data = JSON.parse(localStorage.getItem(name))
   return data
 }
+
+export const getCountDays = (startDate, endDate) => {
+  return Math.ceil(Math.abs(new Date(endDate).getTime() - new Date(startDate).getTime()) / (1000 * 3600 * 24) + 1)
+}

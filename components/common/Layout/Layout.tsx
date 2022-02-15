@@ -21,6 +21,7 @@ const Layout: FC = ({ children }) => {
       {/* <footer>
         footer
       </footer> */}
+      <div id="portal-modal"></div>
     </div>
   )
 }

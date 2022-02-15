@@ -6,11 +6,11 @@ import Image from 'next/image'
 const Button = ({ icon, text, push, onClick }) => {
   const router = useRouter()
 
-  const handleClick = () => {
+  const handleClick = (event) => {
     if (push) {
       router.push(push)
     } else {
-      onClick()
+      onClick(event)
     }
   }
 
