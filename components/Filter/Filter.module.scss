@@ -1,9 +1,14 @@
+@import '../../styles/variables.scss';
+
 .filter {
   width: 100%;
-  pre {
-    margin: 0;
-    font-size: 8px;
-  }
+  padding: 10px;
+  border: 1px solid #000;
+  background: $main;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 .list {
   display: flex;
@@ -29,8 +34,8 @@
   }
 }
 .clear {
-  width: 18px;
-  height: 18px;
+  width: 12px;
+  height: 12px;
   font-size: 10px;
   display: flex;
   justify-content: center;

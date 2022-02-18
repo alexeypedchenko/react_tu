@@ -6,7 +6,7 @@ import { useActions, useAppSelector } from '../../../hooks/useStore'
 import { selectUser } from '../../../store/reducers/user/userSlice'
 import Button from '../../UI/Button/Button'
 import Modal from '../../UI/Modal/Modal'
-import MapBox from '../../map/MapBox/MapBox'
+import MapBox from '../../MapBox/MapBox'
 import ConfirmAction from '../../common/ConfirmAction/ConfirmAction'
 
 const PlaceItem = ({ place, active, small, showOnMap, onClick, onMouseEnter, onMouseLeave }) => {
@@ -25,6 +25,7 @@ const PlaceItem = ({ place, active, small, showOnMap, onClick, onMouseEnter, onM
   }
 
   const isFavorite = useMemo(() => {
+    if (!userData) return
     return isAuth ? userData.favoritePlaces.includes(place.id) : false
   }, [userData])
 
@@ -61,13 +62,11 @@ const PlaceItem = ({ place, active, small, showOnMap, onClick, onMouseEnter, onM
 
       <div className={styles.body}>
         <div className={styles.topbar}>
-          {place.tags.length && (
-            <div className={styles.tags}>
-              {place.tags.map((tag) => (
-                <span key={tag} className={styles.tag}>{tag}</span>
-              ))}
-            </div>
-          )}
+          <div className={styles.tags}>
+            {place.tags.map((tag) => (
+              <span key={tag} className={styles.tag}>{tag}</span>
+            ))}
+          </div>
 
           <CheckAuth>
             <ConfirmAction

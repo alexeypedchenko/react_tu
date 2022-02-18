@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { useActions, useAppSelector } from '../../../hooks/useStore'
-import { selectPlace } from '../../../store/reducers/place/placeSlice'
-import PlacePage from '../../../components/Place/PlacePage/PlacePage'
 import { selectPage } from '../../../store/reducers/page/pageSlice'
+import { selectRoute } from '../../../store/reducers/route/routeSlice'
+import RoutePage from '../../../components/Route/RoutePage/RoutePage'
 
 const Index = () => {
   const router = useRouter()
   const { slug } = router.query
   const { fetchPage } = useActions()
-  const { places } = useAppSelector(selectPlace)
+  const { routes } = useAppSelector(selectRoute)
   const { pages, load, error } = useAppSelector(selectPage)
 
-  const [place, setPlace] = useState(null)
+  const [route, setRoute] = useState(null)
   const [page, setPage] = useState(null)
 
   useEffect(() => {
@@ -27,19 +27,19 @@ const Index = () => {
 
   useEffect(() => {
     if (!slug) return
-    const placeIndex = places.findIndex((place) => place.id === slug)
-    if (placeIndex !== -1) {
-      setPlace(places[placeIndex])
+    const index = routes.findIndex((route) => route.id === slug)
+    if (index !== -1) {
+      setRoute(routes[index])
     }
 
-    if (placeIndex === -1 && places.length > 0) {
-      console.log('placeIndex === -1 && places.length > 0:')
-      router.push('/places')
+    if (index === -1 && routes.length > 0) {
+      console.log('index === -1 && routes.length > 0:')
+      router.push('/routes')
     }
-  }, [slug, places])
+  }, [slug, routes])
 
   return (
-    <PlacePage place={place} page={page} />
+    <RoutePage route={route} page={page} />
   )
 }
 

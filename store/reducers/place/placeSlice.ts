@@ -41,15 +41,15 @@ export const placeSlice = createSlice({
     },
 
     // filter
-    setFilter: (state, action) => {
+    setPlaceFilter: (state, action) => {
       const { name, value } = action.payload
       state.filter[name] = value
     },
-    setFilterList: (state, action) => {
-      state.filterList = getFilterList(action.payload.places, action.payload.filter)
+    setPlaceFilterList: (state, action) => {
+      state.filterList = getFilterList(state.places, state.filter)
     },
-    setFilteredPlaces: (state, action) => {
-      state.filteredPlaces = filterItems(action.payload.places, action.payload.filter)
+    setPlaceFilteredPlaces: (state, action) => {
+      state.filteredPlaces = filterItems(state.places, state.filter)
     },
   },
 

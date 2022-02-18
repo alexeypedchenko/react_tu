@@ -5,10 +5,10 @@ import React, {
   useState,
 } from 'react'
 import styles from './MapBox.module.scss'
-import { usePrevious } from '../../../hooks/usePrevious'
-import { GoogleMap } from '../../../googleMap/googleMap'
+import { usePrevious } from '../../hooks/usePrevious'
+import { GoogleMap } from '../../googleMap/googleMap'
 
-const MapBox = forwardRef(({ markers, onMarkerClick, onMarkerHover }, ref) => {
+const MapBox = forwardRef(({ markers, showRoute, onMarkerClick, onMarkerHover }, ref) => {
   const [map, setMap] = useState(null)
   const { previous: previousMarkers, current: currentMarkers } = usePrevious(markers)
 
@@ -16,6 +16,9 @@ const MapBox = forwardRef(({ markers, onMarkerClick, onMarkerHover }, ref) => {
     const gmap = new GoogleMap('#map-box', { onMarkerClick, onMarkerHover })
     gmap.init().then(() => {
       gmap.setMarkers(markers)
+      if (showRoute) {
+        gmap.route.draw(markers)
+      }
       setMap(gmap)
     })
   }, [])
@@ -24,6 +27,9 @@ const MapBox = forwardRef(({ markers, onMarkerClick, onMarkerHover }, ref) => {
     if (!map) return
     if (JSON.stringify(previousMarkers) !== JSON.stringify(currentMarkers)) {
       map.setMarkers(markers)
+      if (showRoute) {
+        map.route.draw(markers)
+      }
     }
   }, [markers])
 
@@ -61,6 +67,7 @@ const MapBox = forwardRef(({ markers, onMarkerClick, onMarkerHover }, ref) => {
 
 MapBox.defaultProps = {
   markers: [],
+  showRoute: false,
   onMarkerClick: (index) => console.log('onMarkerClick:', index),
   onMarkerHover: (index) => console.log('onMarkerHover:', index)
 }

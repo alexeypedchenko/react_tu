@@ -3,15 +3,17 @@ import { useActions, useAppSelector } from './useStore'
 import { selectPlace } from '../store/reducers/place/placeSlice'
 
 export const usePlaces = () => {
-  const { filter, places } = useAppSelector(selectPlace)
-  const { fetchPlaces, setFilteredPlaces, setFilterList } = useActions()
+  const { filter } = useAppSelector(selectPlace)
+  const { fetchPlaces, setPlaceFilteredPlaces, setPlaceFilterList } = useActions()
 
   useEffect(() => {
-    fetchPlaces()
+    fetchPlaces().then(() => {
+      setPlaceFilterList()
+      setPlaceFilteredPlaces()
+    })
   }, [])
 
   useEffect(() => {
-    setFilteredPlaces({ places, filter })
-    setFilterList({ places, filter })
-  }, [places])
+    setPlaceFilteredPlaces()
+  }, [filter])
 }

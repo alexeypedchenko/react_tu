@@ -20,7 +20,7 @@ const ProfileFavoritePlaces = () => {
   return (
     <div className={styles.list}>
       {favoritePlaces.map((place) => (
-        <PlaceItem key={place.id} place={place} />
+        <PlaceItem key={place.id} place={place} showOnMap />
       ))}
     </div>
   )

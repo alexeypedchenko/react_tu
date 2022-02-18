@@ -152,7 +152,6 @@ const ProfileRoute = ({ editedRoute, onCancel, onSuccess }) => {
         </button>
         {showPlaces && (
           <div>
-            <Filter />
             <div className={styles.places}>
               <PlaceList showOnMap onClick={selectedPlace} />
             </div>

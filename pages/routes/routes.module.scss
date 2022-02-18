@@ -1,0 +1,10 @@
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  & > div {
+    width: calc(33.3333% - (40px / 3));
+    &:not(:nth-child(3n)) {
+      margin-right: 20px;
+    }
+  }
+}

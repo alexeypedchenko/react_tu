@@ -1,21 +1,12 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import styles from './Filter.module.scss'
-import { useActions, useAppSelector } from '../../hooks/useStore'
-import { selectPlace } from '../../store/reducers/place/placeSlice'
 import FilterItem from './FilterItem'
 
-const Filter = () => {
-  const { setFilter, setFilteredPlaces } = useActions()
-  const { filter, places, filterList } = useAppSelector(selectPlace)
-
+const Filter = ({ setFilter, filter, filterList, children }) => {
   const handleCHange = (event) => {
     const { name, value } = event.target
     setFilter({ name, value })
   }
-
-  useEffect(() => {
-    setFilteredPlaces({ places, filter })
-  }, [filter])
 
   return (
     <div className={styles.filter}>
@@ -41,7 +32,12 @@ const Filter = () => {
           />
         ))}
       </div>
-      {/* <pre>{JSON.stringify(filter)}</pre> */}
+
+      {children && (
+        <div>
+          {children}
+        </div>
+      )}
     </div>
   )
 }

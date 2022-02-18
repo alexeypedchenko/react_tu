@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react'
-import styles from './GoogleMap.module.scss'
-import MapBox from './MapBox/MapBox'
-import { usePrevious } from '../../hooks/usePrevious'
-import { selectPlace } from '../../store/reducers/place/placeSlice'
-import { useActions, useAppSelector } from '../../hooks/useStore'
+import styles from './PlaceMap.module.scss'
+import MapBox from '../../MapBox/MapBox'
+import { usePrevious } from '../../../hooks/usePrevious'
+import { selectPlace } from '../../../store/reducers/place/placeSlice'
+import { useActions, useAppSelector } from '../../../hooks/useStore'
 
-const GoogleMap = () => {
+const PlaceMap = () => {
   const map = useRef(null)
   const { setActivePlace, setHoveredPlace } = useActions()
   const { filteredPlaces, activePlace, hoveredPlace } = useAppSelector(selectPlace)
@@ -44,7 +44,7 @@ const GoogleMap = () => {
   )
 }
 
-export default GoogleMap
+export default PlaceMap
 
 // для отображения маршрута
 // useEffect(() => {

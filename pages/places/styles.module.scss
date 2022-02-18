@@ -4,15 +4,10 @@
   display: flex;
   flex-direction: column;
   height: calc(100vh - 60px);
-  padding: 10px 0;
+  padding: 20px 0;
 }
 .head {
   width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
-  border: 1px solid #000;
   margin-bottom: 20px;
   position: sticky;
   top: 10px;
@@ -28,12 +23,12 @@
     border-bottom: 1px solid transparent;
     white-space: nowrap;
     &:hover {
-      background: $hover_main;
+      background: $hover_main !important;
     }
   }
 }
 .toggleActive {
-  background: $main !important;
+  background: $hover_main !important;
 }
 .body {
   display: flex;
