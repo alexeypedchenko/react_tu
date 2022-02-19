@@ -38,3 +38,30 @@ p {
   outline: none;
   cursor: pointer;
 }
+
+
+.custom-label-class {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: white;
+  border-radius: 50%;
+  position: relative;
+  &::before {
+    content: '';
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    border: 3px solid #fff;
+    z-index: -1;
+    top: -38px;
+    left: -38px;
+  }
+}
+
+
+// #map-box div div div div div div div div img {
+//   border: 1px solid #000 !important;
+// }

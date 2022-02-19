@@ -17,7 +17,8 @@ const MapBox = forwardRef(({ markers, showRoute, onMarkerClick, onMarkerHover },
     gmap.init().then(() => {
       gmap.setMarkers(markers)
       if (showRoute) {
-        gmap.route.draw(markers)
+        // gmap.route.draw(markers)
+        gmap.polyline.draw(markers)
       }
       setMap(gmap)
     })
@@ -29,6 +30,8 @@ const MapBox = forwardRef(({ markers, showRoute, onMarkerClick, onMarkerHover },
       map.setMarkers(markers)
       if (showRoute) {
         map.route.draw(markers)
+        console.log('map.polyline:', map.polyline)
+        // .draw()
       }
     }
   }, [markers])

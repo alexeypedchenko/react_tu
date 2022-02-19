@@ -42,6 +42,7 @@ export class GoogleMap {
     this.route = null
     this.circle = null
     this.cluster = null
+    this.polyline = null
 
     this.onMarkerHover = onMarkerHover
     this.onMarkerClick = onMarkerClick
@@ -53,7 +54,7 @@ export class GoogleMap {
 
     markers.forEach((markerData, index) => {
       // создаем маркер
-      const marker = this.createMarker(markerData)
+      const marker = this.createMarker(markerData, false, index)
       // добавляем маркер в массив
       this.markers.push(marker)
       // добавляем новую позицию маркера для центрирования карты
@@ -69,7 +70,7 @@ export class GoogleMap {
     this.centeredMap()
   }
 
-  createMarker(marker, showOnMap = false) {
+  createMarker(marker, showOnMap = false, index) {
     const options = {
       position: {
         lat: +marker.coordinates.lat,
@@ -77,21 +78,23 @@ export class GoogleMap {
       },
       zIndex: 10,
       // https://developers.google.com/maps/documentation/javascript/reference/marker#Icon
-      // icon: {
-      //   url: marker.icon || this.pin,
-      //   size: new google.maps.Size(30, 30),
-      //   // если изображение меньше или больше 30px, масштабируем до 30
-      //   scaledSize: new google.maps.Size(30, 30),
-      // },
+      icon: {
+        url: marker.image,
+        size: new google.maps.Size(50, 50),
+        scaledSize: new google.maps.Size(50, 50), // если изображение меньше или больше 50px, масштабируем до 30
+        labelOrigin: new google.maps.Point(50, 50),
+      },
       // https://developers.google.com/maps/documentation/javascript/reference/marker#MarkerLabel
-      // label: {
-      //   text: marker.name,
-      //   color: 'black',
-      //   fontFamily: 'Arial',
-      //   fontSize: '16',
-      //   fontWeight: '700',
-      //   className: 'custom-label-class',
-      // },
+      label: {
+        // text: marker.name,
+        text: `${index + 1}`,
+        color: 'black',
+        fontFamily: 'Arial',
+        fontSize: '16px',
+        fontWeight: '700',
+        className: 'custom-label-class',
+      },
+      
     }
 
     if (showOnMap) {
@@ -250,6 +253,7 @@ export class GoogleMap {
           this.circle = new Circle(this.map)
           this.route = new Route(this.map)
           this.cluster = new Cluster(this.map)
+          this.polyline = new Polyline(this.map)
           return resolve()
         })
         .catch((error) => {
@@ -405,5 +409,45 @@ class Circle {
 
   hide() {
     this.circle.setVisible(false)
+  }
+}
+
+class Polyline {
+  constructor (map) {
+    const lineSymbol = {
+      path: "M 0,-1 0,1",
+      strokeOpacity: 1,
+      scale: 3,
+      strokeWeight: 3,
+    }
+    const line = {
+      icon: lineSymbol,
+      offset: "0",
+      repeat: "15px",
+    }
+
+    this.flightPath = new google.maps.Polyline({
+      // strokeWeight: 3,
+      strokeColor: "#000000",
+      strokeOpacity: 0,
+      icons: [line],
+      zIndex: 1,
+
+    })
+
+    this.map = map
+  }
+
+  draw(points = []) {
+    const path = points.map((point) => ({
+      lat: +point.coordinates.lat,
+      lng: +point.coordinates.lng,
+    }))
+    this.flightPath.setPath(path)
+    this.flightPath.setMap(this.map)
+  }
+
+  remove() {
+    flightPath.setMap(null)
   }
 }
