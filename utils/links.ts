@@ -11,7 +11,8 @@ export const paths: { [key: string]: string } = {
   // profile
   profile: '/profile',
   favoritePlaces: '/profile/favorite-places',
-  route: '/profile/route'
+  favoriteRoutes: '/profile/favorite-routes',
+  customRoutes: '/profile/custom-routes'
 }
 
 export const links: ILink[] = [
@@ -23,5 +24,6 @@ export const links: ILink[] = [
 export const profileLinks: ILink[] = [
   { name: 'Профиль', path: paths.profile },
   { name: 'Избранные места', path: paths.favoritePlaces },
-  { name: 'Маршруты', path: paths.route },
+  { name: 'Избранные маршруты', path: paths.favoriteRoutes },
+  { name: 'Пользовательские маршруты', path: paths.customRoutes },
 ]

@@ -9,14 +9,18 @@ import {
 } from './utils'
 
 export class GoogleMap {
-  constructor(selector, { onMarkerHover, onMarkerClick} = {}) {
+  constructor(selector, {
+    onMarkerHover = null,
+    onMarkerClick = null,
+    showRoute = false,
+  }) {
     this.loader = new Loader({
       apiKey: 'AIzaSyBOMQAKjVaaYfe_fSHNn3CBFcbNS651GnA',
       version: 'weekly',
     })
 
     this.map = null
-    this.mapContainer = document.querySelector(selector)
+    this.mapContainer = selector
 
     this.mapOptions = {
       // styles: MAP_STYLES_DARK,
@@ -46,6 +50,8 @@ export class GoogleMap {
 
     this.onMarkerHover = onMarkerHover
     this.onMarkerClick = onMarkerClick
+
+    this.showRoute = showRoute
   }
 
   setMarkers(markers = []) {
@@ -92,9 +98,8 @@ export class GoogleMap {
         fontFamily: 'Arial',
         fontSize: '16px',
         fontWeight: '700',
-        className: 'custom-label-class',
+        className: this.showRoute ? 'gm-label-route' : 'gm-label-place',
       },
-      
     }
 
     if (showOnMap) {
@@ -391,8 +396,8 @@ class Circle {
         strokeColor: 'green',
         strokeOpacity: 0.8,
         strokeWeight: 1,
-        scale: 20,
-        anchor: new google.maps.Point(0, 0.8),
+        scale: 45,
+        anchor: new google.maps.Point(0, 0.55),
         zIndex: 2
       },
       map: map
@@ -432,7 +437,6 @@ class Polyline {
       strokeOpacity: 0,
       icons: [line],
       zIndex: 1,
-
     })
 
     this.map = map

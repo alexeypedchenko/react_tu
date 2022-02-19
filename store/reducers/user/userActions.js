@@ -10,6 +10,7 @@ const collectionName = 'users'
 const userDefaultData = {
   role: 'user',
   favoritePlaces: [],
+  favoriteRoutes: [],
 }
 
 export const fetchUserData = createAsyncThunk('user/fetchUserData', async (id) => {

@@ -7,7 +7,7 @@ const visibilityTypes: {[key: string]: string} = {
 }
 
 export const useVisibilityType = (hash = '') => {
-  const [visibilityType, setVisibilityType] = useState<string>('grid');
+  const [visibilityType, setVisibilityType] = useState<string>('map');
   const value = `${hash}_visibilityType`
 
   // useEffect(() => {

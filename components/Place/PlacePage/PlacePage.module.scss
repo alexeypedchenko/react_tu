@@ -1,6 +1,8 @@
 @import '../../../styles/variables.scss';
 
-.page {}
+.page {
+  margin-bottom: 50px;
+}
 .head {
   display: flex;
   justify-content: center;
@@ -37,18 +39,6 @@
   display: flex;
   justify-content: center;
   margin: -10px auto 30px;
-  span {
-    border: 1px solid #000;
-    padding: 4px 12px;
-    text-align: center;
-    font-size: 12px;
-    line-height: 1;
-    font-weight: 600;
-    background: #fff;
-    border-radius: 10px;
-    margin-right: 10px;
-    background: $main;
-  }
 }
 .content {
   width: 700px;
@@ -57,7 +47,15 @@
 }
 .map {
   width: 100%;
-  // border-radius: 4px;
-  // overflow: hidden;
-  // box-shadow: 0 5px 15px 0 rgba(#000, 0.2);
+  margin-bottom: 60px;
+}
+.routes {
+  display: flex;
+  flex-wrap: wrap;
+  & > div {
+    width: calc(33.3333% - (40px / 3));
+    &:not(:nth-child(3n)) {
+      margin-right: 20px;
+    }
+  }
 }

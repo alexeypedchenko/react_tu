@@ -4,12 +4,15 @@ import { useActions, useAppSelector } from '../../../hooks/useStore'
 import { selectPlace } from '../../../store/reducers/place/placeSlice'
 import PlacePage from '../../../components/Place/PlacePage/PlacePage'
 import { selectPage } from '../../../store/reducers/page/pageSlice'
+import { selectRoute } from '../../../store/reducers/route/routeSlice'
+import { useMemo } from 'react'
 
 const Index = () => {
   const router = useRouter()
   const { slug } = router.query
   const { fetchPage } = useActions()
   const { places } = useAppSelector(selectPlace)
+  const { routes } = useAppSelector(selectRoute)
   const { pages, load, error } = useAppSelector(selectPage)
 
   const [place, setPlace] = useState(null)
@@ -38,8 +41,17 @@ const Index = () => {
     }
   }, [slug, places])
 
+  const routesWithPlace = useMemo(() => {
+    if (!place || !routes) return []
+    return routes.filter((route) => route.places.includes(place.id))
+  }, [place, routes])
+
   return (
-    <PlacePage place={place} page={page} />
+    <PlacePage
+      place={place}
+      page={page}
+      routes={routesWithPlace}
+    />
   )
 }
 

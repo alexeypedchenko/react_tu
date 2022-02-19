@@ -3,6 +3,7 @@ import styles from './RoutePage.module.scss'
 
 import MapBox from '../../MapBox/MapBox'
 import Page from '../../Page/Page'
+import Tag from '../../UI/Tag/Tag'
 
 import { useAppSelector } from '../../../hooks/useStore'
 import { selectPlace } from '../../../store/reducers/place/placeSlice'
@@ -33,7 +34,7 @@ const RoutePage = ({ route, page }) => {
 
         {route.tags.length && (
           <div className={styles.tags}>
-            {route.tags.map((tag) => (<span>{tag}</span>))}
+            {route.tags.map((tag) => (<Tag key={tag} tag={tag} />))}
           </div>
         )}
       </>)}

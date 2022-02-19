@@ -1,3 +1,5 @@
+@import './variables.scss';
+
 html,
 body {
   padding: 0;
@@ -39,14 +41,13 @@ p {
   cursor: pointer;
 }
 
-
-.custom-label-class {
+.gm-label-route {
   width: 30px;
   height: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: white;
+  background: #fff;
   border-radius: 50%;
   position: relative;
   &::before {
@@ -61,6 +62,21 @@ p {
   }
 }
 
+.gm-label-place {
+  font-size: 0 !important;
+  width: 0;
+  height: 0;
+  &::before {
+    content: '';
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    border: 3px solid #fff;
+    z-index: -1;
+    top: -3px;
+    left: -53px;
+  }
+}
 
 // #map-box div div div div div div div div img {
 //   border: 1px solid #000 !important;

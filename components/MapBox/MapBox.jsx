@@ -2,6 +2,7 @@ import React, {
   forwardRef,
   useEffect,
   useImperativeHandle,
+  useRef,
   useState,
 } from 'react'
 import styles from './MapBox.module.scss'
@@ -9,11 +10,12 @@ import { usePrevious } from '../../hooks/usePrevious'
 import { GoogleMap } from '../../googleMap/googleMap'
 
 const MapBox = forwardRef(({ markers, showRoute, onMarkerClick, onMarkerHover }, ref) => {
+  const mapRef = useRef(null)
   const [map, setMap] = useState(null)
   const { previous: previousMarkers, current: currentMarkers } = usePrevious(markers)
 
   useEffect(() => {
-    const gmap = new GoogleMap('#map-box', { onMarkerClick, onMarkerHover })
+    const gmap = new GoogleMap(mapRef.current, { showRoute, onMarkerClick, onMarkerHover })
     gmap.init().then(() => {
       gmap.setMarkers(markers)
       if (showRoute) {
@@ -29,9 +31,8 @@ const MapBox = forwardRef(({ markers, showRoute, onMarkerClick, onMarkerHover },
     if (JSON.stringify(previousMarkers) !== JSON.stringify(currentMarkers)) {
       map.setMarkers(markers)
       if (showRoute) {
-        map.route.draw(markers)
-        console.log('map.polyline:', map.polyline)
-        // .draw()
+        // map.route.draw(markers)
+        gmap.polyline.draw(markers)
       }
     }
   }, [markers])
@@ -61,7 +62,7 @@ const MapBox = forwardRef(({ markers, showRoute, onMarkerClick, onMarkerHover },
         </button>
       )}
       <div
-        id="map-box"
+        ref={mapRef}
         className={styles.map}
       ></div>
     </div>

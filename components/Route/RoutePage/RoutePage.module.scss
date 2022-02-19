@@ -37,18 +37,6 @@
   display: flex;
   justify-content: center;
   margin: -10px auto 30px;
-  span {
-    border: 1px solid #000;
-    padding: 4px 12px;
-    text-align: center;
-    font-size: 12px;
-    line-height: 1;
-    font-weight: 600;
-    background: #fff;
-    border-radius: 10px;
-    margin-right: 10px;
-    background: $main;
-  }
 }
 .content {
   width: 700px;
