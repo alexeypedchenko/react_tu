@@ -1,11 +1,10 @@
-import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import Signin from '../../components/Signin/Signin'
 import { useAppSelector } from '../../hooks/useStore'
 import { selectUser } from '../../store/reducers/user/userSlice'
 
-const Login: NextPage = () => {
+const Login = () => {
   const { isAuth } = useAppSelector(selectUser)
   const router = useRouter()
 

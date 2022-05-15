@@ -1,23 +1,10 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import type { RootState } from '../../store'
-import { IUser } from "../../../models/IUser";
+import { createSlice } from '@reduxjs/toolkit'
 import allThunks, {
   fetchUserData,
   updateUserData,
 } from './userActions'
 
-export interface IUserState {
-  load: boolean;
-  error: string;
-  user: IUser | null;
-  isAuth: boolean;
-
-  userData: object | null;
-  userDataLoad: boolean;
-  userDataError: string;
-}
-
-const initialState: IUserState = {
+const initialState = {
   load: false,
   error: '',
   user: null,
@@ -35,7 +22,7 @@ export const userSlice = createSlice({
     setUser: (state, action) => {
       state.user = action.payload
     },
-    setAuth: (state, action: PayloadAction<boolean>) => {
+    setAuth: (state, action) => {
       state.isAuth = action.payload
     },
     clearUserData: (state) => {
@@ -44,30 +31,30 @@ export const userSlice = createSlice({
   },
   extraReducers: {
     // fetchUserData
-    [fetchUserData.pending.type]: (state, action) => {
+    [fetchUserData.pending]: (state, action) => {
       state.load = true
       state.error = ''
     },
-    [fetchUserData.fulfilled.type]: (state, action) => {
+    [fetchUserData.fulfilled]: (state, action) => {
       state.load = false
       state.userData = action.payload
     },
-    [fetchUserData.rejected.type]: (state, action) => {
+    [fetchUserData.rejected]: (state, action) => {
       state.load = false
       state.userData = null
       state.error = action.error.message
     },
 
     // updateUserData
-    [updateUserData.pending.type]: (state, action) => {
+    [updateUserData.pending]: (state, action) => {
       state.userDataLoad = true
       state.userDataError = ''
     },
-    [updateUserData.fulfilled.type]: (state, action) => {
+    [updateUserData.fulfilled]: (state, action) => {
       state.userDataLoad = false
       state.userData = action.payload
     },
-    [updateUserData.rejected.type]: (state, action) => {
+    [updateUserData.rejected]: (state, action) => {
       state.userDataLoad = false
       state.userDataError = action.error.message
     },
@@ -76,5 +63,5 @@ export const userSlice = createSlice({
 })
 
 export const userActions = {...userSlice.actions, ...allThunks}
-export const selectUser = (state: RootState) => state.user
+export const selectUser = (state) => state.user
 export default userSlice.reducer

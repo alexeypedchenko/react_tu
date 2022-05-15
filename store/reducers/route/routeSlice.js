@@ -1,5 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { RootState } from '../../store'
+import { createSlice } from '@reduxjs/toolkit'
 import { filterItems, getFilterList } from '../../../utils/filters'
 import allThunks, {
   fetchRoutes,
@@ -38,15 +37,15 @@ export const routeSlice = createSlice({
   },
 
   extraReducers: {
-    [fetchRoutes.pending.type]: (state, action) => {
+    [fetchRoutes.pending]: (state, action) => {
       state.load = true
       state.error = ''
     },
-    [fetchRoutes.fulfilled.type]: (state, action) => {
+    [fetchRoutes.fulfilled]: (state, action) => {
       state.load = false
       state.routes = action.payload
     },
-    [fetchRoutes.rejected.type]: (state, action) => {
+    [fetchRoutes.rejected]: (state, action) => {
       state.load = false
       state.routes = []
       state.error = action.error.message
@@ -54,15 +53,15 @@ export const routeSlice = createSlice({
 
     // load: false,
     // error: '',
-    [fetchRoute.pending.type]: (state, action) => {
+    [fetchRoute.pending]: (state, action) => {
       state.load = true
       state.error = ''
     },
-    [fetchRoute.fulfilled.type]: (state, action) => {
+    [fetchRoute.fulfilled]: (state, action) => {
       state.load = false
       state.routes.push(action.payload)
     },
-    [fetchRoute.rejected.type]: (state, action) => {
+    [fetchRoute.rejected]: (state, action) => {
       state.load = false
       state.error = action.error.message
     },
@@ -70,5 +69,5 @@ export const routeSlice = createSlice({
 })
 
 export const routeActions = { ...routeSlice.actions, ...allThunks }
-export const selectRoute = (state: RootState) => state.route
+export const selectRoute = (state) => state.route
 export default routeSlice.reducer

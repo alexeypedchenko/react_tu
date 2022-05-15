@@ -8,7 +8,6 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
 } from 'firebase/auth'
-import { IUser, IUserCredentials } from '../models/IUser'
 
 initApp()
 const auth = getAuth()
@@ -37,7 +36,7 @@ export const GoogleLogin = () => {
     });
 };
 
-export const signup = ({ email, password }: IUserCredentials) => new Promise((res, rej) => {
+export const signup = ({ email, password }) => new Promise((res, rej) => {
   createUserWithEmailAndPassword(auth, email, password).then((userCredential) => {
     const user = userCredential.user
     res(user.providerData[0])
@@ -48,7 +47,7 @@ export const signup = ({ email, password }: IUserCredentials) => new Promise((re
   })
 })
 
-export const signin = ({ email, password }: IUserCredentials) => new Promise((res, rej) => {
+export const signin = ({ email, password }) => new Promise((res, rej) => {
   signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
     const user = userCredential.user
     res(user.providerData[0])
@@ -67,7 +66,7 @@ export const signout = () => new Promise((res, rej) => {
   })
 })
 
-export const authWatcher = (cb: (user: IUser | null, isAuth: boolean) => void) =>
+export const authWatcher = (cb) =>
   onAuthStateChanged(auth, (user) => {
     if (user) {
       const userData = {

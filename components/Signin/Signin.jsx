@@ -1,14 +1,9 @@
-import React, { FC, useState } from 'react'
+import React, { useState } from 'react'
 import { signin, GoogleLogin } from '../../firebase/firebaseAuth'
 import styles from './Signin.module.scss'
 
-interface UserFields {
-  email: string;
-  password: string;
-}
-
-const Signin: FC = () => {
-  const [fields, setFields] = useState<UserFields>({
+const Signin = () => {
+  const [fields, setFields] = useState({
     email: 'admin@mail.com',
     password: '123456'
   })

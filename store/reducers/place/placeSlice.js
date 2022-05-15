@@ -1,5 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { RootState } from '../../store'
+import { createSlice } from '@reduxjs/toolkit'
 import { filterItems, getFilterList } from '../../../utils/filters'
 import allThunks, {
   fetchPlaces,
@@ -54,15 +53,15 @@ export const placeSlice = createSlice({
   },
 
   extraReducers: {
-    [fetchPlaces.pending.type]: (state, action) => {
+    [fetchPlaces.pending]: (state, action) => {
       state.load = true
       state.error = ''
     },
-    [fetchPlaces.fulfilled.type]: (state, action) => {
+    [fetchPlaces.fulfilled]: (state, action) => {
       state.load = false
       state.places = action.payload
     },
-    [fetchPlaces.rejected.type]: (state, action) => {
+    [fetchPlaces.rejected]: (state, action) => {
       state.load = false
       state.places = []
       state.error = action.error.message
@@ -70,15 +69,15 @@ export const placeSlice = createSlice({
 
     // load: false,
     // error: '',
-    [fetchPlace.pending.type]: (state, action) => {
+    [fetchPlace.pending]: (state, action) => {
       state.load = true
       state.error = ''
     },
-    [fetchPlace.fulfilled.type]: (state, action) => {
+    [fetchPlace.fulfilled]: (state, action) => {
       state.load = false
       state.places.push(action.payload)
     },
-    [fetchPlace.rejected.type]: (state, action) => {
+    [fetchPlace.rejected]: (state, action) => {
       state.load = false
       state.error = action.error.message
     },
@@ -86,5 +85,5 @@ export const placeSlice = createSlice({
 })
 
 export const placeActions = { ...placeSlice.actions, ...allThunks }
-export const selectPlace = (state: RootState) => state.place
+export const selectPlace = (state) => state.place
 export default placeSlice.reducer

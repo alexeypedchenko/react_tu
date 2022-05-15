@@ -1,4 +1,3 @@
-import { FC } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import styles from './Header.module.scss'
@@ -12,7 +11,7 @@ import { useAppSelector } from '../../../hooks/useStore'
 import { selectUser } from '../../../store/reducers/user/userSlice'
 import CheckAuth from '../CheckAuth/CheckAuth'
 
-const Header: FC = () => {
+const Header = () => {
   const { isAuth } = useAppSelector(selectUser)
   const { pathname } = useRouter()
 

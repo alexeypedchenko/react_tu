@@ -1,8 +1,8 @@
-import React, { FC } from 'react'
+import React from 'react'
 import { Provider } from 'react-redux'
 import { store } from './store'
 
-const StoreProviderHoc: FC = ({ children }) => {
+const StoreProviderHoc = ({ children }) => {
   return (
     <Provider store={store}>
       {children}

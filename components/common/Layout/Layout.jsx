@@ -1,11 +1,10 @@
-import { FC } from 'react'
 import styles from './Layout.module.scss'
 import Header from '../Header/Header'
 import { useAuthWatcher } from '../../../hooks/useAuthWatcher'
 import { usePlaces } from '../../../hooks/usePlaces'
 import { useRoutes } from '../../../hooks/useRoutes'
 
-const Layout: FC = ({ children }) => {
+const Layout = ({ children }) => {
   const auth = useAuthWatcher()
   const places = usePlaces()
   const routes = useRoutes()

@@ -1,9 +1,4 @@
-export interface ILink {
-  name: string;
-  path: string;
-}
-
-export const paths: { [key: string]: string } = {
+export const paths = {
   home: '/',
   places: '/places',
   routes: '/routes',
@@ -15,15 +10,15 @@ export const paths: { [key: string]: string } = {
   customRoutes: '/profile/custom-routes'
 }
 
-export const links: ILink[] = [
+export const links = [
   { name: 'Главная', path: paths.home },
   { name: 'Места', path: paths.places },
   { name: 'Маршруты', path: paths.routes },
 ]
 
-export const profileLinks: ILink[] = [
+export const profileLinks = [
   { name: 'Профиль', path: paths.profile },
   { name: 'Избранные места', path: paths.favoritePlaces },
   { name: 'Избранные маршруты', path: paths.favoriteRoutes },
-  { name: 'Пользовательские маршруты', path: paths.customRoutes },
+  // { name: 'Пользовательские маршруты', path: paths.customRoutes },
 ]

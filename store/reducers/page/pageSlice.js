@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { RootState } from '../../store'
 import allThunks, { fetchPage } from './asyncThunks'
 
 const pageSlice = createSlice({
@@ -12,15 +11,15 @@ const pageSlice = createSlice({
   reducers: {
   },
   extraReducers: {
-    [fetchPage.pending.type]: (state, action) => {
+    [fetchPage.pending]: (state, action) => {
       state.load = true
       state.error = ''
     },
-    [fetchPage.fulfilled.type]: (state, action) => {
+    [fetchPage.fulfilled]: (state, action) => {
       state.load = false
       state.pages.push(action.payload)
     },
-    [fetchPage.rejected.type]: (state, action) => {
+    [fetchPage.rejected]: (state, action) => {
       state.load = false
       state.error = action.error.message
     },
@@ -28,5 +27,5 @@ const pageSlice = createSlice({
 })
 
 export const pageActions = { ...pageSlice.actions, ...allThunks }
-export const selectPage = (state: RootState) => state.page
+export const selectPage = (state) => state.page
 export default pageSlice.reducer

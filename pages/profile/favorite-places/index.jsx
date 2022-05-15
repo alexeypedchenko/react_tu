@@ -1,14 +1,13 @@
-import type { NextPage } from 'next'
 import ProfileLayout from '../../../components/Profile/ProfileLayout/ProfileLayout'
-import ProfileRoute from '../../../components/Profile/ProfileRoute/ProfileRoute'
+import ProfileFavorites from '../../../components/Profile/ProfileFavorites/ProfileFavorites'
 import { useAppSelector } from '../../../hooks/useStore'
 import { selectUser } from '../../../store/reducers/user/userSlice'
 
-const favoritePlaces: NextPage = () => {
+const favoritePlaces = () => {
   const { user, userData } = useAppSelector(selectUser)
   return (
-    <ProfileLayout title="Маршруты">
-      <ProfileRoute />
+    <ProfileLayout title="Избранные места">
+      <ProfileFavorites type="places" />
     </ProfileLayout>
   )
 }
