@@ -4,14 +4,11 @@ import styles from './Signin.module.scss'
 
 const Signin = () => {
   const [fields, setFields] = useState({
-    email: 'admin@mail.com',
-    password: '123456'
+    email: '',
+    password: ''
   })
 
-  const submit = () => {
-    console.log('fields:', fields)
-    signin(fields)
-  }
+  const submit = () => signin(fields)
 
   return (
     <div className={styles.signin}>
