@@ -4,7 +4,7 @@ import ProfileLayout from '../../../components/Profile/ProfileLayout/ProfileLayo
 import ProfileFavorites from '../../../components/Profile/ProfileFavorites/ProfileFavorites'
 import { selectUser } from '../../../store/reducers/user/userSlice'
 
-const favoritePlaces = () => {
+const FavoritePlaces = () => {
   const { user, userData } = useSelector(selectUser)
   return (
     <ProfileLayout title="Избранные места">
@@ -13,4 +13,4 @@ const favoritePlaces = () => {
   )
 }
 
-export default favoritePlaces
+export default FavoritePlaces
