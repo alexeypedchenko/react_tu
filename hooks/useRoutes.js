@@ -1,9 +1,10 @@
 import { useEffect } from 'react'
-import { useActions, useAppSelector } from './useStore'
+import { useSelector } from 'react-redux'
+import { useActions } from './useStore'
 import { selectRoute } from '../store/reducers/route/routeSlice'
 
 export const useRoutes = () => {
-  const { filter } = useAppSelector(selectRoute)
+  const { filter } = useSelector(selectRoute)
   const { fetchRoutes, setRouteFilteredRoutes, setRouteFilterList } = useActions()
 
   useEffect(() => {

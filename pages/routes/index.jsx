@@ -1,11 +1,12 @@
+import { useSelector } from 'react-redux'
 import styles from './routes.module.scss'
 import Filter from '../../components/Filter/Filter'
 import RouteItem from '../../components/Route/RouteItem/RouteItem'
-import { useActions, useAppSelector } from '../../hooks/useStore'
+import { useActions } from '../../hooks/useStore'
 import { selectRoute } from '../../store/reducers/route/routeSlice'
 
 const Routes = () => {
-  const { filteredRoutes, filter, filterList } = useAppSelector(selectRoute)
+  const { filteredRoutes, filter, filterList } = useSelector(selectRoute)
   const { setRouteFilter } = useActions()
 
   return (

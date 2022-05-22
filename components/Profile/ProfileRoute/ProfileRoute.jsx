@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { deleteDbDoc, getDbDocsByField, updateDbDoc } from '../../../firebase/firebaseFirestore'
-import { useAppSelector } from '../../../hooks/useStore'
+import { useSelector } from 'react-redux'
 import { selectUser } from '../../../store/reducers/user/userSlice'
 import ConfirmAction from '../../common/ConfirmAction/ConfirmAction'
 import ProfileRouteForm from './ProfileRouteForm'
@@ -8,7 +8,7 @@ import ProfileRouteForm from './ProfileRouteForm'
 const collectionName = 'customRoutes'
 
 const ProfileRoute = () => {
-  const { user } = useAppSelector(selectUser)
+  const { user } = useSelector(selectUser)
   const [createNew, setCreateNew] = useState(false)
   const [routes, setRoutes] = useState([])
   const [editedRoute, setEditedRoute] = useState(null)

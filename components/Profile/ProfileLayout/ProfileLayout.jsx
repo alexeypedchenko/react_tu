@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react'
 import styles from './ProfileLayout.module.scss'
 import { useRouter } from 'next/router'
-import { useAppSelector } from '../../../hooks/useStore'
+import { useSelector } from 'react-redux'
 import { selectUser } from '../../../store/reducers/user/userSlice'
 import ProfileAside from '../ProfileAside/ProfileAside'
 
 const ProfileLayout = ({ children, title }) => {
-  const { isAuth } = useAppSelector(selectUser)
+  const { isAuth } = useSelector(selectUser)
   const router = useRouter()
 
   useEffect(() => {

@@ -4,7 +4,7 @@ import Filter from '../../Filter/Filter'
 import PlaceList from '../../Place/PlaceList/PlaceList'
 import PlaceItem from '../../Place/PlaceItem/PlaceItem'
 import Datepicker from '../../UI/Datepicker/Datepicker'
-import { useAppSelector } from '../../../hooks/useStore'
+import { useSelector } from 'react-redux'
 import { selectPlace } from '../../../store/reducers/place/placeSlice'
 
 import { addDbDoc, updateDbDoc } from '../../../firebase/firebaseFirestore'
@@ -23,8 +23,8 @@ const RouteModel = {
 }
 
 const ProfileRoute = ({ editedRoute, onCancel, onSuccess }) => {
-  const { places: allPlaces } = useAppSelector(selectPlace)
-  const { user } = useAppSelector(selectUser)
+  const { places: allPlaces } = useSelector(selectPlace)
+  const { user } = useSelector(selectUser)
   const [showPlaces, setShowPlaces] = useState(false)
   const [route, setRoute] = useState(editedRoute ? {
     ...editedRoute,

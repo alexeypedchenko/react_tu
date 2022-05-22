@@ -5,11 +5,11 @@ import MapBox from '../../MapBox/MapBox'
 import Page from '../../Page/Page'
 import Tag from '../../UI/Tag/Tag'
 
-import { useAppSelector } from '../../../hooks/useStore'
+import { useSelector } from 'react-redux'
 import { selectPlace } from '../../../store/reducers/place/placeSlice'
 
 const RoutePage = ({ route, page }) => {
-  const { places } = useAppSelector(selectPlace)
+  const { places } = useSelector(selectPlace)
   const mapRoute = useMemo(() => {
     if (!route) return []
     return route.places.map((placeId) => {

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
-import { useActions, useAppSelector } from '../../../hooks/useStore'
+import { useActions } from '../../../hooks/useStore'
 import { selectPage } from '../../../store/reducers/page/pageSlice'
 import { selectRoute } from '../../../store/reducers/route/routeSlice'
 import RoutePage from '../../../components/Route/RoutePage/RoutePage'
@@ -9,8 +10,8 @@ const Index = () => {
   const router = useRouter()
   const { slug } = router.query
   const { fetchPage } = useActions()
-  const { routes } = useAppSelector(selectRoute)
-  const { pages, load, error } = useAppSelector(selectPage)
+  const { routes } = useSelector(selectRoute)
+  const { pages, load, error } = useSelector(selectPage)
 
   const [route, setRoute] = useState(null)
   const [page, setPage] = useState(null)

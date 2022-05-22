@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import Modal from '../../UI/Modal/Modal'
-import { useAppSelector } from '../../../hooks/useStore'
+import { useSelector } from 'react-redux'
 import { selectUser } from '../../../store/reducers/user/userSlice'
 import Signin from '../../Signin/Signin';
 
 const CheckAuth = ({ action, children }) => {
-  const { isAuth, userDataLoad } = useAppSelector(selectUser)
+  const { isAuth, userDataLoad } = useSelector(selectUser)
   const [modalOpen, setModapOpen] = useState(false)
 
   const handleClick = (event) => {

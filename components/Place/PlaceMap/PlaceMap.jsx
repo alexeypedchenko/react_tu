@@ -1,14 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react'
+import { useSelector } from 'react-redux'
 import styles from './PlaceMap.module.scss'
 import MapBox from '../../MapBox/MapBox'
 import { usePrevious } from '../../../hooks/usePrevious'
 import { selectPlace } from '../../../store/reducers/place/placeSlice'
-import { useActions, useAppSelector } from '../../../hooks/useStore'
+import { useActions } from '../../../hooks/useStore'
 
 const PlaceMap = () => {
   const map = useRef(null)
   const { setActivePlace, setHoveredPlace } = useActions()
-  const { filteredPlaces, activePlace, hoveredPlace } = useAppSelector(selectPlace)
+  const { filteredPlaces, activePlace, hoveredPlace } = useSelector(selectPlace)
   const { previous: previousHoveredPlace, current: currentHoveredPlace } = usePrevious(hoveredPlace)
 
   useEffect(() => {

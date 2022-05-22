@@ -1,12 +1,13 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 import styles from './PlaceList.module.scss'
 import PlaceItem from '../PlaceItem/PlaceItem'
-import { useActions, useAppSelector } from '../../../hooks/useStore'
+import { useActions } from '../../../hooks/useStore'
 import { selectPlace } from '../../../store/reducers/place/placeSlice'
 
 const PlaceList = ({ showOnMap, onClick }) => {
   const { setActivePlace, setHoveredPlace } = useActions()
-  const { filteredPlaces, activePlace } = useAppSelector(selectPlace)
+  const { filteredPlaces, activePlace } = useSelector(selectPlace)
 
   return (
     <>

@@ -1,6 +1,7 @@
-import Link from 'next/link'
 import React, { useMemo, useState } from 'react'
-import { useActions, useAppSelector } from '../../../hooks/useStore'
+import { useSelector } from 'react-redux'
+import Link from 'next/link'
+import { useActions } from '../../../hooks/useStore'
 import { selectPlace } from '../../../store/reducers/place/placeSlice'
 import { selectUser } from '../../../store/reducers/user/userSlice'
 import CheckAuth from '../../common/CheckAuth/CheckAuth'
@@ -13,7 +14,7 @@ import styles from './RouteItem.module.scss'
 
 const RouteItem = ({ route }) => {
   const { updateUserData } = useActions()
-  const { isAuth, user, userData } = useAppSelector(selectUser)
+  const { isAuth, user, userData } = useSelector(selectUser)
   const [showOnMap, setShowOnMap] = useState(false)
 
   const toFavorite = () => {
@@ -31,7 +32,7 @@ const RouteItem = ({ route }) => {
     return isAuth ? userData.favoriteRoutes.includes(route.id) : false
   }, [userData])
 
-  const { places } = useAppSelector(selectPlace)
+  const { places } = useSelector(selectPlace)
   const mapRoute = useMemo(() => {
     return route.places.map((placeId) => {
       const index = places.findIndex((place) => place.id === placeId)

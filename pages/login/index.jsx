@@ -1,11 +1,11 @@
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import Signin from '../../components/Signin/Signin'
-import { useAppSelector } from '../../hooks/useStore'
+import { useSelector } from 'react-redux'
 import { selectUser } from '../../store/reducers/user/userSlice'
 
 const Login = () => {
-  const { isAuth } = useAppSelector(selectUser)
+  const { isAuth } = useSelector(selectUser)
   const router = useRouter()
 
   useEffect(() => {

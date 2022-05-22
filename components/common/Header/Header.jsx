@@ -7,12 +7,12 @@ import NoAccountIcon from '../../../assets/icons/no_account.svg'
 
 import { links } from '../../../utils/links'
 import { signout } from '../../../firebase/firebaseAuth'
-import { useAppSelector } from '../../../hooks/useStore'
+import { useSelector } from 'react-redux'
 import { selectUser } from '../../../store/reducers/user/userSlice'
 import CheckAuth from '../CheckAuth/CheckAuth'
 
 const Header = () => {
-  const { isAuth } = useAppSelector(selectUser)
+  const { isAuth } = useSelector(selectUser)
   const { pathname } = useRouter()
 
   return (

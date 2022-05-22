@@ -4,7 +4,7 @@ import styles from './ProfileFavorites.module.scss'
 import PlaceItem from '../../Place/PlaceItem/PlaceItem'
 import RouteItem from '../../Route/RouteItem/RouteItem'
 
-import { useAppSelector } from '../../../hooks/useStore'
+import { useSelector } from 'react-redux'
 import { selectPlace } from '../../../store/reducers/place/placeSlice'
 import { selectUser } from '../../../store/reducers/user/userSlice'
 import { selectRoute } from '../../../store/reducers/route/routeSlice'
@@ -15,9 +15,9 @@ const types = {
 }
 
 const ProfileFavorites = ({ type }) => {
-  const { userData } = useAppSelector(selectUser)
-  const { places } = useAppSelector(selectPlace)
-  const { routes } = useAppSelector(selectRoute)
+  const { userData } = useSelector(selectUser)
+  const { places } = useSelector(selectPlace)
+  const { routes } = useSelector(selectRoute)
 
   const favoriteList = useMemo(() => {
     if (!places || !routes || !userData) return []

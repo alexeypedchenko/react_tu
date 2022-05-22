@@ -1,8 +1,9 @@
 import React, { useMemo, useState } from 'react'
+import { useSelector } from 'react-redux'
 import Link from 'next/link'
 import styles from './PlaceItem.module.scss'
 import CheckAuth from '../../common/CheckAuth/CheckAuth'
-import { useActions, useAppSelector } from '../../../hooks/useStore'
+import { useActions } from '../../../hooks/useStore'
 import { selectUser } from '../../../store/reducers/user/userSlice'
 import Button from '../../UI/Button/Button'
 import Modal from '../../UI/Modal/Modal'
@@ -12,7 +13,7 @@ import ConfirmAction from '../../common/ConfirmAction/ConfirmAction'
 
 const PlaceItem = ({ place, active, small, showOnMap, onClick, onMouseEnter, onMouseLeave }) => {
   const { updateUserData } = useActions()
-  const { isAuth, user, userData } = useAppSelector(selectUser)
+  const { isAuth, user, userData } = useSelector(selectUser)
   const [openMap, setOpenMap] = useState(false)
 
   const toFavorite = () => {
