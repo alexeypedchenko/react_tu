@@ -1,3 +1,4 @@
+import React from 'react'
 import { useSelector } from 'react-redux'
 import styles from './routes.module.scss'
 import Filter from '../../components/Filter/Filter'

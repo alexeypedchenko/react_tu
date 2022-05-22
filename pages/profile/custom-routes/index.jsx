@@ -1,6 +1,7 @@
+import React from 'react'
+import { useSelector } from 'react-redux'
 import ProfileLayout from '../../../components/Profile/ProfileLayout/ProfileLayout'
 import ProfileRoute from '../../../components/Profile/ProfileRoute/ProfileRoute'
-import { useSelector } from 'react-redux'
 import { selectUser } from '../../../store/reducers/user/userSlice'
 
 const favoritePlaces = () => {

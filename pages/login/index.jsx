@@ -1,7 +1,8 @@
+import React from 'react'
+import { useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import Signin from '../../components/Signin/Signin'
-import { useSelector } from 'react-redux'
 import { selectUser } from '../../store/reducers/user/userSlice'
 
 const Login = () => {

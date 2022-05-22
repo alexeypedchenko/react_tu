@@ -1,3 +1,4 @@
+import React from 'react'
 import { useSelector } from 'react-redux'
 import styles from './styles.module.scss'
 import PlaceMap from '../../components/Place/PlaceMap/PlaceMap'

@@ -1,5 +1,6 @@
-import ProfileLayout from '../../components/Profile/ProfileLayout/ProfileLayout'
+import React from 'react'
 import { useSelector } from 'react-redux'
+import ProfileLayout from '../../components/Profile/ProfileLayout/ProfileLayout'
 import { selectUser } from '../../store/reducers/user/userSlice'
 
 const Profile = () => {
