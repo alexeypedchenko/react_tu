@@ -76,4 +76,6 @@ MapBox.defaultProps = {
   onMarkerHover: (index) => console.log('onMarkerHover:', index)
 }
 
+MapBox.displayName = 'MapBox'
+
 export default MapBox
